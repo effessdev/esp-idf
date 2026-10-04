@@ -55,20 +55,32 @@ void app_main(void)
 }
 ```
 
-Let's log "Hello world!" inside it. You don't want to worry about this code for now. Just copy and paste it:
+Let's log "Hello world!" inside it.
+
+### Hello, world!
+
+We use a function called `ESP_LOGI()` to log "Hello world!" (`I` stands for "info"). Include the `esp_log.h` header to use that function. The function takes two arguments: a `TAG`, and the actual string to log.
 
 ```c
-#include "esp_log.h" // Add this header for logging
-#include <stdio.h>
-
-// Define a tag for your log messages
-static const char *TAG = "MAIN";
+#include "esp_log.h"
 
 void app_main(void) {
-  // Log "Hello world!"
-  ESP_LOGI(TAG, "Hello world!");
+  ESP_LOGI("MAIN", "Hello world!");
 }
 ```
+
+This code will log something like this:
+
+```
+I (312) MAIN: Hello world!
+```
+
+Here,
+
+- `I`: Log level indicator (Info).
+- `(312)`: Timestamp in milliseconds since boot (this exact number will vary).
+- `MAIN`: Tag name (useful to determine the source of the LOG message when we have a lot of them).
+- `Hello world!`: The actual content.
 
 ## Building (compiling) the project
 
