@@ -155,11 +155,6 @@ If you accidentally deleted/edited the `.vscode` folder, you can regenerate it u
 
 ## Test Your Knowledge
 
-There are a few things you are going to use a lot. Try to answer the following questions:
-
-??? note "How do we open the command palette?"
-    Using the shortcut `Ctrl + Shift + P`
-
 ??? note "When do we need to configure our project?"
     You need to configure your project whenever you:
 
@@ -169,6 +164,5 @@ There are a few things you are going to use a lot. Try to answer the following q
     - Fixing corrupted build files
     - Etc.
 
-??? note "How do we configure our project?"
-
-    By running the `ESP-IDF: Run idf.py reconfigure Task` from the command palette.
+??? note "How do we configure our project? Is it safe to do it repetedly?"
+    By running the `ESP-IDF: Run idf.py reconfigure Task` from the command palette. It's safe to do repetedly.

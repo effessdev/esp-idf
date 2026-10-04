@@ -43,3 +43,14 @@ Keep this in mind since you might need this in the future.
 ### Verify installation
 
 After installing, restart VS Code. Use the shortcut `Ctrl + Shift + P` to open the **command palette** (remember this shortcut, we are going to use it a lot). Inside the command palette, search `ESP-IDF`. You will see many entries which start with `ESP-IDF:`. Those commands are provided my the ESP-IDF extension. These commands are what we use for almost everything.
+
+If you can't see those entires, restart VS Code, and wait for the following notification:
+
+> _No standard ESP-IDF project was found in this workspace. Do you want to activate the ESP-IDF extension anyway?_
+
+Click "yes". Then only the extension will be enabled in VS Code.
+
+## Test your knowledge
+
+??? note "How do we open the command palette?"
+    Using the shortcut `Ctrl + Shift + P`.
