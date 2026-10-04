@@ -1,5 +1,5 @@
-site_name: Learn ESP-IDF
-site_description: Free and ad-free learning platform for ESP-IDF.
+site_name: Learn ESP-IDF (by EffessDev)
+site_description: Master ESP32 embedded systems. 100% free, zero ads, no paywalls.
 site_author: EffessDev
 repo_url: https://github.com/effessdev/esp-idf
 copyright: >
@@ -53,7 +53,7 @@ extra:
   generator: false
 
 nav:
-  - Home: index.md
+  - Welcome: index.md
   - Getting started:
       - Installation: 01-getting-started/01-install.md
       - Your first project: 01-getting-started/02-first-project.md
