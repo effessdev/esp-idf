@@ -47,5 +47,5 @@ Use the shortcut `Ctrl + Shift + P` to open the **command palette** (remember th
 
 ## Test your knowledge
 
-??? note "How do we open the command palette?"
+??? question "How do we open the command palette?"
     Using the shortcut `Ctrl + Shift + P`.

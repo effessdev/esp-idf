@@ -91,7 +91,13 @@ void app_main(void)
 
 ## Build & flash
 
-I hope you remember how to do this. If not, check [Your First Project](/01-getting-started/02-first-project/).
+I hope you still remember how to build and flash the project.
+
+??? question "How do I build the project?"
+    Run the `ESP-IDF: Build Your Project` command from the command palette.
+
+??? question "How do I flash the project?"
+    Refer [Your First Project - Flashing](/01-getting-started/02-first-project/#flashing)
 
 ## Connect your LED
 

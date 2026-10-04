@@ -19,7 +19,7 @@ The tab will refresh, and you will see a form to fill in your project details. F
 
 Click "Create Project" and wait again. After creation, in the new tab which pops up, click "Open Project". This will open your brand new ESP-IDF project in a fresh VS Code window.
 
-???+ warning "If you are using Clangd"
+!!! note "If you are using Clangd"
     If you are using Clangd instead of the Microsoft C/C++ extension, run `ESP-IDF: Configure project for ESP-Clang` from the VS Code command palette to make sure Clangd IntelliSense works correctly. Also, make sure both of them aren't activated at the same time, as they can interfere with each other.
 
 ## Configure your project
@@ -34,7 +34,10 @@ You need to configure your project whenever you:
 
 But it's safe to do again and again, even if you haven't done anything above or have any problems. Since we just created a new project, let's run it.
 
-From the command palette, run the `Ctrl + Shift + P -> ESP-IDF: Run idf.py reconfigure Task` command.
+From the command palette, run the `ESP-IDF: Run idf.py reconfigure Task` command.
+
+??? question "How do I open the command palette?"
+    Use the shortcut `Ctrl + Shift + P`.
 
 This will take some time. While it's working, let's learn what it does:
 
@@ -92,7 +95,7 @@ ESP-IDF: Build Your Project
 
 This will also take some time. Be patient.
 
-## Flashing your project
+## Flashing your project {#flashing}
 
 Flashing is like uploading the compiled code to your ESP32. You need to physically connect the ESP32 to your computer. After doing that, run the following command from the command palette:
 
