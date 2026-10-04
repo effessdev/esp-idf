@@ -14,14 +14,80 @@ Create a new empty project using the `sample_project` template. We covered this 
 
 ## Write the code
 
-I am not going to give you the code. Here is what you have to do:
+```c
+// Include required headers
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/gpio.h"
+#include "esp_log.h"
 
-- Go to any free chatbot (ChatGPT, Gemini, Claude, etc.)
-- Paste your `main.c` file.
-- Ask it to write the code to blink GPIO22.
-- Paste it back.
+void app_main(void)
+{
+    // Clean up previous configuration
+    gpio_reset_pin(GPIO22);
 
-If you have an AI agent (like Claude Code or GitHub Copilot), you can ask it to directly edit `main.c`.
+    // Configure the pin for voltage output
+    gpio_set_direction(GPIO22, GPIO_MODE_OUTPUT);
+
+    // Store the current state (0 = OFF, 1 = ON)
+    uint8_t state = 0;
+
+    ESP_LOGI("MAIN", "Starting LED...")
+
+    // Infinite loop
+    while (1) {
+        // Set GPIO level (0 = OFF, 1 = ON)
+        gpio_set_level(GPIO22, state);
+
+        // Log the current state
+        ESP_LOGI("MAIN", "LED State: %s", state ? "ON" : "OFF");
+
+        // Toggle state for next iteration
+        state = !state;
+
+        // Stop execution for 1000 ms (1 second)
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
+```
+
+Here, `pdMS_TO_TICKS` is a function-like macro that converts milliseconds to ticks. `vTaskDelay` only accepts ticks.
+
+## Improving the code
+
+`GPIO_NUM22` and the `TAG` are used in multiple parts of the code. It's better to define them in the top of the file, rather than repeating it each time:
+
+```c
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/gpio.h"
+#include "esp_log.h"
+
+#define BLINK_GPIO GPIO_NUM_22 // object-like macro to define gpio to be blinked
+
+static const char *TAG = "MAIN"; // used for logging
+
+void app_main(void)
+{
+    gpio_reset_pin(BLINK_GPIO);
+    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+
+    uint8_t state = 0;
+
+    ESP_LOGI(TAG, "Starting LED...")
+
+    while (1) {
+        gpio_set_level(BLINK_GPIO, state);
+        ESP_LOGI(TAG, "LED State: %s", state ? "ON" : "OFF");
+
+        state = !state;
+
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
+```
 
 ## Build & flash
 
