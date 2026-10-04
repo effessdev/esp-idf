@@ -1,6 +1,6 @@
 # Welcome!
 
-This website will teach you **embedded systems development** using **ESP32** and the **ESP-IDF framework** by **Espressif Systems**.
+This 100% free & ad-free course will teach you **embedded systems development** using **ESP32** and the **ESP-IDF framework** by **Espressif Systems**. Learn at your own pace, with zero distractions!
 
 ## What makes this different
 
