@@ -1,8 +1,5 @@
 # Hardware interrupts
 
-!!! warning "Draft"
-    This page is still in the draft stage.
-
 Hardware interrupts are hardware signals that instantly pause the normal program flow to handle external events such as a button press, without wasting CPU cycles on continuous polling.
 
 Let's update our code such that the LED can be toggled using a button press.
@@ -95,8 +92,15 @@ Now, after building and flashing, touch the button pin to GND. If you did everyt
 
 ## Improving the code
 
-!!! warning
-    Work in progress.
+Currently, we are toggling the LED directly inside the ISR handler. This is not recommended because ISRs have the highest priority, and will block anything else that's running until it finishes.
+
+Instead, we use a pattern where we:
+
+- Create a queue
+- Create a function which runs in parallel to the main function when started from the main function (we call it a task), which continuously consume the items in the queue
+- Make the ISR handler add an event item to the queue, which the button task will handle one by one (first added is first handled)
+
+Here is the code that uses this approach:
 
 ```c
 #include <stdio.h>
@@ -111,20 +115,22 @@ Now, after building and flashing, touch the button pin to GND. If you did everyt
 // Queue to send button events from ISR to the task
 static QueueHandle_t gpio_evt_queue = NULL;
 
-// Interrupt Service Routine (ISR) - keeps work minimal
+// ISR keeps work minimal (add the event to the queue)
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
     xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
 }
 
-// Task to handle button presses outside ISR context
+// Task to handle button presses from the queue
 static void button_task(void* arg)
 {
     uint32_t io_num;
     int led_state = 0;
 
     for (;;) {
+        // xQueueRecieve recieves the first item added to the queue.
+        // If there are no items, it waits until one is added.
         if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
             // Toggle LED state on button press event
             led_state = !led_state;
@@ -138,33 +144,23 @@ static void button_task(void* arg)
 
 void app_main(void)
 {
-    // 1. Configure LED Pin (Output)
-    gpio_config_t io_conf_led = {
-        .pin_bit_mask = (1ULL << LED_PIN),
-        .mode = GPIO_MODE_OUTPUT,
-        .pull_up_en = GPIO_PULLUP_DISABLE,
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .intr_type = GPIO_INTR_DISABLE
-    };
-    gpio_config(&io_conf_led);
+    // Configure LED Pin as Output
+    gpio_reset_pin(LED_PIN);
+    gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-    // 2. Configure Button Pin (Input with Internal Pull-Up and Falling Edge Interrupt)
-    gpio_config_t io_conf_btn = {
-        .pin_bit_mask = (1ULL << BUTTON_PIN),
-        .mode = GPIO_MODE_INPUT,
-        .pull_up_en = GPIO_PULLUP_ENABLE,       // Keeps pin HIGH until touched to GND
-        .pull_down_en = GPIO_PULLDOWN_DISABLE,
-        .intr_type = GPIO_INTR_NEGEDGE          // Trigger interrupt on falling edge (HIGH -> LOW)
-    };
-    gpio_config(&io_conf_btn);
+    // Configure Button Pin as Input with Pull-Up and Interrupt
+    gpio_reset_pin(BUTTON_PIN);
+    gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
+    gpio_pullup_en(BUTTON_PIN);
+    gpio_set_intr_type(BUTTON_PIN, GPIO_INTR_NEGEDGE);
 
-    // 3. Create Queue for Passing Events
+    // Create Queue for Passing Events
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 
-    // 4. Start Button Handler Task
+    // Start Button Handler Task
     xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
 
-    // 5. Install ISR Service and Add Handler
+    // Install ISR Service and Add Handler
     gpio_install_isr_service(0);
     gpio_isr_handler_add(BUTTON_PIN, gpio_isr_handler, (void*) BUTTON_PIN);
 }
