@@ -1,6 +1,13 @@
 site_name: Learn ESP-IDF
 site_description: Free and ad-free learning platform for ESP-IDF.
 site_author: EffessDev
+repo_url: https://github.com/effessdev/esp-idf
+copyright: >
+  Copyright © Faseeh Zaman F S. All rights reserved. • Found an issue? 
+  <a href="https://github.com/effessdev/esp-idf/issues" style="text-decoration: underline;">Open an issue</a> 
+  or 
+  <a href="https://github.com/effessdev/esp-idf/pulls" style="text-decoration: underline;">submit a pull request</a> 
+  on GitHub.
 
 theme:
   name: material
@@ -41,6 +48,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+
+extra:
+  generator: false
 
 nav:
   - Home: index.md
