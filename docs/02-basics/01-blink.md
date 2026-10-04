@@ -8,6 +8,15 @@ As you can see, there are a lot of pins underneath it. These are called **GPIO p
 
 What we are going to now is to make the GPIO22 pin HIGH and LOW continuously (like it's blinking), and connect an LED to that pin so it will turn ON and OFF. No need to worry about why we chose GPIO22 for now.
 
+## Hardware required
+
+Everything required for [Your First Project](/01-getting-started/02-first-project), plus:
+
+- LED
+- Jumper wires
+- A 220-330 Ω resistor
+- Breadboard (optional, but recommended)
+
 ## Create a new empty project
 
 Create a new empty project using the `sample_project` template. We covered it in this chapter: [Your first project](/01-getting-started/02-first-project). But try to do it yourself without looking.
