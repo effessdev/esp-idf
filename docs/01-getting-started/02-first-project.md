@@ -1,5 +1,12 @@
 # Your first project
 
+Hardware required:
+
+- An ESP32 microcontroller.
+- A suitable cable to connect it to your PC.
+
+## Create a new empty project
+
 We are going to use the `ESP-IDF: New Project` command from the command palette to create the project.
 
 - Open the command palette (I hope you remember the shortcut)

@@ -6,11 +6,11 @@ Let's have a look at our ESP32 microcontroller:
 
 As you can see, there are a lot of pins underneath it. These are called **GPIO pins** (General Purpose Input Output pins). These pins are the primary way in which the ESP32 control external hardware. Each pin can be turned HIGH voltage or LOW voltage.
 
-What we are going to now is to make the GPIO22 pin HIGH and LOW continuously (like it's blinking), and connect an LED to that pin so it will turn ON and OFF. Don't ask me why I choose GPIO22.
+What we are going to now is to make the GPIO22 pin HIGH and LOW continuously (like it's blinking), and connect an LED to that pin so it will turn ON and OFF. No need to worry about why we chose GPIO22 for now.
 
 ## Create a new empty project
 
-Create a new empty project using the `sample_project` template. We covered this here: [Your first project](/01-getting-started/02-first-project). But try to do it yourself without looking.
+Create a new empty project using the `sample_project` template. We covered it in this chapter: [Your first project](/01-getting-started/02-first-project). But try to do it yourself without looking.
 
 ## Write the code
 
@@ -91,13 +91,13 @@ void app_main(void)
 
 ## Build & flash
 
-I hope you still remember how to build and flash the project.
+We covered this in previous chapters. Do you still remember it?
 
-??? question "How do I build the project?"
+??? question "How to build the project?"
     Run the `ESP-IDF: Build Your Project` command from the command palette.
 
-??? question "How do I flash the project?"
-    Refer [Your First Project - Flashing](/01-getting-started/02-first-project/#flashing)
+??? question "How to flash the project?"
+    Refer to [Your First Project - Flashing](/01-getting-started/02-first-project/#flashing)
 
 ## Connect your LED
 
