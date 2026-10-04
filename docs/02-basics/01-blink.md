@@ -2,7 +2,7 @@
 
 Let's have a look at our ESP32 microcontroller:
 
-(esp32)
+<img width="785" alt="image" src="https://github.com/user-attachments/assets/a5708d32-d09b-4e50-b8bb-e7a262bb795e" />
 
 As you can see, there are a lot of pins underneath it. These are called **GPIO pins** (General Purpose Input Output pins). These pins are the primary way in which the ESP32 control external hardware. Each pin can be turned HIGH voltage or LOW voltage.
 
