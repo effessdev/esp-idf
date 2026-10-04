@@ -45,4 +45,4 @@ nav:
       - Installation: 01-getting-started/01-install.md
       - Your first project: 01-getting-started/02-first-project.md
   - Basics:
-      - Blink an LED: 02-basics/01-blink.md
+      - Blinking an LED: 02-basics/01-blink.md
