@@ -165,3 +165,5 @@ void app_main(void)
     gpio_isr_handler_add(BUTTON_PIN, gpio_isr_handler, (void*) BUTTON_PIN);
 }
 ```
+
+Now, our code is much better!
