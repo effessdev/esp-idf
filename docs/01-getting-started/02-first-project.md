@@ -1,26 +1,26 @@
 # Your first project
 
-We are going to use the `ESP-IDF: New Project` command from the command palette to create the project. Press `Ctrl + Shift + P` to open the command palette.
+We are going to use the `ESP-IDF: New Project` command from the command palette to create the project.
 
-- From the command palette, search and click on `ESP-IDF: New Project`, and wait.
+- Open the command palette (I hope you remember the shortcut)
+- Search and click on `ESP-IDF: New Project`, and wait.
 - Select your ESP-IDF version (you might see only one version since we only installed one), and wait.
 - A new tab will pop up. Inside that tab, under `ESP-IDF Templates` select the `sample_project` template and click the "Create Project" button.
 
 The tab will refresh, and you will see a form to fill in your project details. Fill in the details:
 
-- Project name: Your project name.
-- Project directory: Your project directory.
-- ESP-IDF target: esp32.
-- ESP-IDF board: Custom board.
-- Serial port: Detect.
-- OpenOCD configuration files: Keep the default value.
-- ESP-IDF component directory: Keep the input empty.
+- **Project name:** Your project name.
+- **Project directory:** Your project directory.
+- **ESP-IDF target:** esp32.
+- **ESP-IDF board:** Custom board.
+- **Serial port:** Detect.
+- **OpenOCD configuration files:** Keep the default value.
+- **ESP-IDF component directory:** Keep the input empty.
 
 Click "Create Project" and wait again. After creation, in the new tab which pops up, click "Open Project". This will open your brand new ESP-IDF project in a fresh VS Code window.
 
-> If you are prompted to generate `compile_commands.json`, accept it. If not, or you mistakenly clicked "Decline", do `Ctrl + Shift + P -> ESP-IDF: Run idf.py reconfigure Task`, which does the same thing. `compile_commands.json` is essential for Intellisense to work correctly. Otherwise, you will encounter error squiggles everywhere.
-
-> If you are using Clangd instead of the Microsoft C/C++ extension, run `ESP-IDF: Configure project for ESP-Clang` from the VS Code command palette to make sure Clangd IntelliSense works correctly. Also, make sure both of them aren't activated at the same time, as they can interfere with each other.
+???+ warning "If you are using Clangd"
+    If you are using Clangd instead of the Microsoft C/C++ extension, run `ESP-IDF: Configure project for ESP-Clang` from the VS Code command palette to make sure Clangd IntelliSense works correctly. Also, make sure both of them aren't activated at the same time, as they can interfere with each other.
 
 ## Configure your project
 
@@ -34,7 +34,7 @@ You need to configure your project whenever you:
 
 But it's safe to do again and again, even if you haven't done anything above or have any problems. Since we just created a new project, let's run it.
 
-Like we did before, we are again going to use the command palette. Open the command palette (do you remember how?), and click `Ctrl + Shift + P -> ESP-IDF: Run idf.py reconfigure Task`.
+From the command palette, run the `Ctrl + Shift + P -> ESP-IDF: Run idf.py reconfigure Task` command.
 
 This will take some time. While it's working, let's learn what it does:
 
@@ -88,7 +88,7 @@ Flashing is like uploading the compiled code to your ESP32. You need to physical
 ESP-IDF: Flash (UART) Your Project
 ```
 
-It will probably won't work out of the box. The fix differ dipending on your platform.
+It will probably won't work out of the box. The fix differs dipending on your platform.
 
 ### If you are using Windows
 

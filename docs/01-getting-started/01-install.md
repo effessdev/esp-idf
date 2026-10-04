@@ -1,4 +1,4 @@
-# Getting started
+# Installation
 
 We have to install 2 things:
 
