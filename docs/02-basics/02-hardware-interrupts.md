@@ -22,7 +22,7 @@ While creating ISRs, we prefix `IRAM_ATTR` before the function name:
 ```c
 static void IRAM_ATTR my_isr_handler(void* arg)
 {
-    // code...
+    // code to toggle the LED
 }
 ```
 
@@ -34,9 +34,15 @@ On most standard computers, all programs and functions are fully loaded in to th
 
 ESP32 (and other MCUs) have very limited RAM (less than 1 MB). So, functions remain in the external Flash memory chip and are read on the fly through a small cache.
 
-## Code
+## How we are going to do this (conceptually)
 
-Read the following code from top to bottom to understand it (keep an eye on the comments):
+- We set the button GPIO pin to input mode, which will allow the ESP32 to read the voltage in the button pin.
+- We give a constant HIGH voltage to the button pin.
+- We put a resistor (also called pull-up resistor) between the voltage source and the pin, allowing us to connect the pin to GND (zero voltage) without causing high current.
+- We configure the button pin to trigger a signal (interrupt) when it goes from HIGH to LOW.
+- Now, when we touch the other end of the wire to GND, the voltage of the button pin will drop to LOW, triggering the interrupt, and causing the ISR handler to execute.
+
+## The actual code
 
 ```c
 #include <stdio.h>
@@ -49,8 +55,7 @@ Read the following code from top to bottom to understand it (keep an eye on the 
 
 static int led_state = 0;
 
-// ISR handler: executed immediately on button press
-// (not yet, we have to wire it to the hardware event from the main function)
+// Define the ISR handler
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     led_state = !led_state;
@@ -62,14 +67,105 @@ void app_main(void)
     gpio_reset_pin(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-    // Configure Button as input with pull-up resistor and falling edge interrupt
     gpio_reset_pin(BUTTON_PIN);
+
+    // Set button pin to input mode
     gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
+    
+    // Enable pull-up resistor in button pin
+    // (this will also give a HIGH voltage to the pin)
     gpio_pullup_en(BUTTON_PIN);
+
+    // Set the interrupt type to GPIO_INTR_NEGEDGE, which
+    // stands for "when the voltage go from HIGH to LOW"
     gpio_set_intr_type(BUTTON_PIN, GPIO_INTR_NEGEDGE);
 
-    // Install interrupt service and attach the handler
+    // Install interrupt service (required for properly
+    // handing the interrupt over to the ISR handler)
     gpio_install_isr_service(0);
+
+    // Attach the ISR handler to the button pin
     gpio_isr_handler_add(BUTTON_PIN, gpio_isr_handler, NULL);
+}
+```
+
+## Test the code
+
+Now, after building and flashing, touch the button pin to GND. If you did everything correctly, the LED will respond to the input.
+
+## Improving the code
+
+!!! warning
+    Work in progress.
+
+```c
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+#include "driver/gpio.h"
+
+#define LED_PIN       GPIO_NUM_22
+#define BUTTON_PIN    GPIO_NUM_23
+
+// Queue to send button events from ISR to the task
+static QueueHandle_t gpio_evt_queue = NULL;
+
+// Interrupt Service Routine (ISR) - keeps work minimal
+static void IRAM_ATTR gpio_isr_handler(void* arg)
+{
+    uint32_t gpio_num = (uint32_t) arg;
+    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
+}
+
+// Task to handle button presses outside ISR context
+static void button_task(void* arg)
+{
+    uint32_t io_num;
+    int led_state = 0;
+
+    for (;;) {
+        if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
+            // Toggle LED state on button press event
+            led_state = !led_state;
+            gpio_set_level(LED_PIN, led_state);
+            
+            // Simple software debounce delay
+            vTaskDelay(pdMS_TO_TICKS(200));
+        }
+    }
+}
+
+void app_main(void)
+{
+    // 1. Configure LED Pin (Output)
+    gpio_config_t io_conf_led = {
+        .pin_bit_mask = (1ULL << LED_PIN),
+        .mode = GPIO_MODE_OUTPUT,
+        .pull_up_en = GPIO_PULLUP_DISABLE,
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_DISABLE
+    };
+    gpio_config(&io_conf_led);
+
+    // 2. Configure Button Pin (Input with Internal Pull-Up and Falling Edge Interrupt)
+    gpio_config_t io_conf_btn = {
+        .pin_bit_mask = (1ULL << BUTTON_PIN),
+        .mode = GPIO_MODE_INPUT,
+        .pull_up_en = GPIO_PULLUP_ENABLE,       // Keeps pin HIGH until touched to GND
+        .pull_down_en = GPIO_PULLDOWN_DISABLE,
+        .intr_type = GPIO_INTR_NEGEDGE          // Trigger interrupt on falling edge (HIGH -> LOW)
+    };
+    gpio_config(&io_conf_btn);
+
+    // 3. Create Queue for Passing Events
+    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+
+    // 4. Start Button Handler Task
+    xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
+
+    // 5. Install ISR Service and Add Handler
+    gpio_install_isr_service(0);
+    gpio_isr_handler_add(BUTTON_PIN, gpio_isr_handler, (void*) BUTTON_PIN);
 }
 ```
