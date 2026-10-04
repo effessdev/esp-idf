@@ -1,6 +1,6 @@
 # Hardware interrupts
 
-???+ warning "Draft"
+!!! warning "Draft"
     This page is still in the draft stage.
 
 Hardware interrupts are hardware signals that instantly pause the normal program flow to handle external events such as a button press, without wasting CPU cycles on continuous polling.
@@ -49,7 +49,8 @@ Read the following code from top to bottom to understand it (keep an eye on the 
 
 static int led_state = 0;
 
-// ISR handler: executed immediately on button press (not yet, we have to wire it to the hardware event from the main function)
+// ISR handler: executed immediately on button press
+// (not yet, we have to wire it to the hardware event from the main function)
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     led_state = !led_state;
