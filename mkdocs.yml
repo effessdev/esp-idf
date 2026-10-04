@@ -42,5 +42,5 @@ markdown_extensions:
 nav:
   - Home: index.md
   - Getting started:
-      - Installation: getting-started/01-install.md
-      - Your first project: getting-started/02-first-project.md
+      - Installation: 01-getting-started/01-install.md
+      - Your first project: 01-getting-started/02-first-project.md
