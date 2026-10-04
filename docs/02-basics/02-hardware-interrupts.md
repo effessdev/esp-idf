@@ -167,3 +167,11 @@ void app_main(void)
 ```
 
 Now, our code is much better!
+
+While you might say this is not a button (it's a wire, obviously), this is what exactly happens inside a physical button. You connect one side of the button to GPIO23, and the other to GND. Pressing it will close the circuit (like touching the wire to GND).
+
+## Test your knowledge
+
+- What is an ISR handler?
+- What is `IRAM_ATTR`?
+- Explain how the LED toggles when we touch the button pin to GND (in the new improved code).
