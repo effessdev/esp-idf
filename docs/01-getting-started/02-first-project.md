@@ -177,14 +177,11 @@ If you accidentally deleted/edited the `.vscode` folder, you can regenerate it u
 
 ## Test Your Knowledge
 
-??? question "When do we need to configure our project?"
-    You need to configure your project whenever you:
+Test your knowledge by answering the following questions:
 
-    - Start a new project
-    - Adding, removing, or renaming source files
-    - Adding or changing component dependencies
-    - Fixing corrupted build files
-    - Etc.
-
-??? question "How do we configure our project? Is it safe to do it repetedly?"
-    By running the `ESP-IDF: Run idf.py reconfigure Task` from the command palette. It's safe to do repetedly.
+- How do we create a new ESP-IDF project? Which template should we use for an empty project?
+- When do we need to configure our project? How can we do it? Is it safe to do repeatedly?
+- What does I in `ESP_LOGI` stand for?
+- How do we build an ESP-IDF project?
+- How do we flash an ESP-IDF project to the ESP32?
+- What is monitoring? How can we do it?
