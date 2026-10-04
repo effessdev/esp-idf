@@ -35,15 +35,15 @@ We use this extension as a high-level wrapper for ESP-IDF. Most times, we do not
 
 Install the extension named "ESP-IDF" by "Espressif Systems" in VS Code.
 
-### Verify installation
-
 After installing, restart VS Code. You might get this notification:
 
 > _No standard ESP-IDF project was found in this workspace. Do you want to activate the ESP-IDF extension anyway?_
 
 Click "Activate Anyway". This will activate the extension.
 
-Now, use the shortcut `Ctrl + Shift + P` to open the **command palette** (remember this shortcut, we are going to use it a lot). Inside the command palette, search `ESP-IDF`. You will see many entries which start with `ESP-IDF:`. Those commands are provided my the ESP-IDF extension. These commands are what we use for almost everything.
+### Verify installation
+
+Use the shortcut `Ctrl + Shift + P` to open the **command palette** (remember this shortcut, we are going to use it a lot). Inside the command palette, search `ESP-IDF`. You will see many entries which start with `ESP-IDF:`. Those commands are provided my the ESP-IDF extension. These commands are what we use for almost everything.
 
 ## Test your knowledge
 
