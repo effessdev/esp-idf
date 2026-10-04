@@ -31,7 +31,7 @@ I hope you remember how to do this. If not, check [Your First Project](/01-getti
 
 Now, your GPIO22 pin must be turning ON and OFF repeatedly. But we can't see it yet. Time to set up the circuit:
 
-- Connect the positive terminal of your LED to GPIO22.
+- Connect the positive terminal of your LED to GPIO22 (labelled as `D22`).
 - Connect the negative terminal of your LED to a 220 Ω to 330 Ω resistor (this is important; without a resistor, you might damage your microcontroller).
 - Connect the other end of the resistor to the GND pin (ground pin) in the ESP32.
 
