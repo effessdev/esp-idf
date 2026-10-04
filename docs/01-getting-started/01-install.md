@@ -47,7 +47,7 @@ Use the shortcut `Ctrl + Shift + P` to open the **command palette** (remember th
 
 ## Test your knowledge
 
-Each chapter ends with this section. The purpose is to solidify important that you might need frequently in your memory using [active recall](https://en.wikipedia.org/wiki/Testing_effect).
+Each chapter ends with this section. The purpose is to solidify important things that you might need frequently in your memory using [active recall](https://en.wikipedia.org/wiki/Testing_effect).
 
 ??? question "How do we open the command palette?"
     Using the shortcut `Ctrl + Shift + P`.
