@@ -1,8 +1,5 @@
 # Your first project
 
-!!! warning "This is just a draft"
-    It's taken from one of my DEV.to posts, and has not been properly optimized for the purpose of this course. I will update it soon.
-
 We are going to use the `ESP-IDF: New Project` command from the command palette to create the project. Press `Ctrl + Shift + P` to open the command palette.
 
 - From the command palette, search and click on `ESP-IDF: New Project`, and wait.
@@ -47,7 +44,7 @@ This will take some time. While it's working, let's learn what it does:
 
 ## Let's write some code
 
-If you look at `main.c` right now, you will see and empty main function:
+If you look at `main.c` right now, you will see and empty main function (`app_main`):
 
 ```c
 #include <stdio.h>
@@ -58,7 +55,7 @@ void app_main(void)
 }
 ```
 
-Let's log "Hello world!" inside it:
+Let's log "Hello world!" inside it. You don't want to worry about this code for now. Just copy and paste it:
 
 ```c
 #include "esp_log.h" // Add this header for logging
@@ -75,7 +72,7 @@ void app_main(void) {
 
 ## Building (compiling) the project
 
-Like we always do, open the command palette and run
+Open the command palette (`Ctrl + Shift + P`) and run
 
 ```
 ESP-IDF: Build Your Project
@@ -152,10 +149,26 @@ So, congratulations! You just set up your computer for ESP-IDF, created a new pr
 
 ## Tips
 
-### Using the `idf.py` command
-
-`idf.py` may not be available in your terminal, but it's always available in the ESP-IDF terminal, which you can open using `Ctrl + Shift + P -> ESP-IDF: Open ESP-IDF Terminal`.
-
 ### Adding the VS Code Configuration Folder
 
 If you accidentally deleted/edited the `.vscode` folder, you can regenerate it using the `Ctrl + Shift + P -> ESP-IDF: Add VS Code Configuration Folder` command.
+
+## Test Your Knowledge
+
+There are a few things you are going to use a lot. Try to answer the following questions:
+
+??? note "How do we open the command palette?"
+    Using the shortcut `Ctrl + Shift + P`
+
+??? note "When do we need to configure our project?"
+    You need to configure your project whenever you:
+
+    - Start a new project
+    - Adding, removing, or renaming source files
+    - Adding or changing component dependencies
+    - Fixing corrupted build files
+    - Etc.
+
+??? note "How do we configure our project?"
+
+    By running the `ESP-IDF: Run idf.py reconfigure Task` from the command palette.

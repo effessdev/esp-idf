@@ -1,6 +1,6 @@
 # Welcome!
 
-This website will teach you **embedded systems development** using the ESP-IDF framework by Espressif Systems.
+This website will teach you **embedded systems development** using the **ESP-IDF framework** by **Espressif Systems**.
 
 ## What makes this different
 
