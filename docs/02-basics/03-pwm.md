@@ -1,5 +1,8 @@
 # Controlling LED Brightness with PWM
 
+!!! warning "Draft"
+    This chapter is not completed yet.
+
 So far, we have only turned our LED fully **ON** (HIGH voltage) or fully **OFF** (LOW voltage). But what if you want to set the LED to half brightness, or make it smoothly pulse like a "breathing" light?
 
 Digital pins on the ESP32 can only output either 3.3 V or 0 V. They cannot natively output an intermediate voltage like 1.65 V. To solve this, we use a technique called **PWM**.
