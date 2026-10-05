@@ -39,7 +39,7 @@ The LEDC peripheral uses two main building blocks:
 
 1. **Timer**: Defines the timing properties:
    - **Frequency**: How many times per second the PWM signal repeats.
-   - **Bit resolution**: How fine your brightness control is. For example, a **10-bit resolution** gives $2^{10} = 1024$ discrete steps (`0` to `1023`).
+   - **Bit resolution** or **duty resolution**: How fine your brightness control is. For example, a **10-bit resolution** gives $2^{10} = 1024$ discrete steps (`0` to `1023`).
 2. **Channel**: Defines the output state:
    - Sets the **duty cycle** (brightness level).
    - Maps the timer signal to a specific physical GPIO pin.
@@ -64,6 +64,58 @@ Let's write a simple program to configure the LEDC peripheral and set our LED to
 #include "driver/ledc.h"
 #include "esp_log.h"
 
+void app_main(void)
+{
+    // 1. Configure the LEDC Timer
+    ledc_timer_config_t ledc_timer = {
+        .speed_mode       = LEDC_LOW_SPEED_MODE,
+        .timer_num        = LEDC_TIMER_0,
+        .duty_resolution  = LEDC_TIMER_10_BIT,
+        .freq_hz          = 5000,
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ledc_timer_config(&ledc_timer);
+
+    // 2. Configure the LEDC Channel
+    ledc_channel_config_t ledc_channel = {
+        .speed_mode     = LEDC_LOW_SPEED_MODE,
+        .channel        = LEDC_CHANNEL_0,
+        .timer_sel      = LEDC_TIMER_0,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = GPIO_NUM_22,
+        .duty           = 0, // Start with LED turned OFF
+        .hpoint         = 0
+    };
+    ledc_channel_config(&ledc_channel);
+
+    ESP_LOGI("MAIN", "Setting LED to 50%% brightness...");
+
+    // Set duty cycle to ~50% (512 out of 1023)
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 512);
+
+    // Update duty cycle to apply changes in hardware
+    ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
+}
+```
+
+## How it works
+
+1. **Timer setup**: We configure `LEDC_TIMER_0` with a 10-bit resolution (`0` to `1023`) running at 5000 Hz.
+2. **Channel setup**: We attach `LEDC_CHANNEL_0` to `GPIO_NUM_22` and tell it to use `LEDC_TIMER_0`.
+3. **`ledc_set_duty()`**: Prepares the new brightness value in memory (`512` is half of `1023`).
+4. **`ledc_update_duty()`**: Latches the prepared value into hardware logic so the physical pin starts outputting the new PWM signal.
+
+## Improving the code
+
+The standard practice is to define macros for storing configurations like this on top of the main file. By doing this, you will have all configurations in one place:
+
+```c
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "driver/ledc.h"
+#include "esp_log.h"
+
 #define LEDC_GPIO       GPIO_NUM_22
 #define LEDC_MODE       LEDC_LOW_SPEED_MODE
 #define LEDC_CHANNEL    LEDC_CHANNEL_0
@@ -75,7 +127,6 @@ static const char *TAG = "MAIN";
 
 void app_main(void)
 {
-    // 1. Configure the LEDC Timer
     ledc_timer_config_t ledc_timer = {
         .speed_mode       = LEDC_MODE,
         .timer_num        = LEDC_TIMER,
@@ -85,36 +136,24 @@ void app_main(void)
     };
     ledc_timer_config(&ledc_timer);
 
-    // 2. Configure the LEDC Channel
     ledc_channel_config_t ledc_channel = {
         .speed_mode     = LEDC_MODE,
         .channel        = LEDC_CHANNEL,
         .timer_sel      = LEDC_TIMER,
         .intr_type      = LEDC_INTR_DISABLE,
         .gpio_num       = LEDC_GPIO,
-        .duty           = 0, // Start with LED turned OFF
+        .duty           = 0,
         .hpoint         = 0
     };
     ledc_channel_config(&ledc_channel);
-
+    
     ESP_LOGI(TAG, "Setting LED to 50%% brightness...");
-
-    // Set duty cycle to ~50% (512 out of 1023)
     ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, 512);
-
-    // Update duty cycle to apply changes in hardware
     ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
 }
 ```
 
-## How it works
-
-1. **Timer setup**: We configure `LEDC_TIMER_0` with a 10-bit resolution (`0` to `1023`) running at 5000 Hz.
-2. **Channel setup**: We attach `LEDC_CHANNEL_0` to `GPIO_NUM_22` and tell it to use `LEDC_TIMER_0`.
-3. **`ledc_set_duty()`**: Prepares the new brightness value in memory (`512` is half of `1023`).
-4. **`ledc_update_duty()`**: Latches the prepared value into hardware logic so the physical pin starts outputting the new PWM signal.
-
-## Improving the code (Breathing light effect)
+## Improving the code further (Breathing light effect)
 
 Setting a static brightness is a good start, but we can continuously adjust the duty cycle in a loop to create a smooth "breathing" light effect:
 
