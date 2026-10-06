@@ -10,7 +10,7 @@ What we are going to now is to make the GPIO22 pin HIGH and LOW continuously (li
 
 ## Hardware required
 
-Everything required for [Your First Project](../getting-started/first-project), plus:
+Everything required for [Your First Project](../getting-started/first-project.md), plus:
 
 - LED
 - Jumper wires
@@ -19,7 +19,7 @@ Everything required for [Your First Project](../getting-started/first-project), 
 
 ## Create a new empty project
 
-Create a new empty project using the `sample_project` template. We covered it in this chapter: [Your First Project](../getting-started/first-project). But try to do it yourself without looking.
+Create a new empty project using the `sample_project` template. We covered it in this chapter: [Your First Project](../getting-started/first-project.md). But try to do it yourself without looking.
 
 ## Write the code
 
@@ -106,7 +106,7 @@ We covered this in previous chapters. Do you still remember it?
     Run the `ESP-IDF: Build Your Project` command from the command palette.
 
 ??? question "How to flash the project"
-    Refer to the following section: [Your First Project - Flashing](../getting-started/first-project/#flashing)
+    Refer to the following section: [Your First Project - Flashing](../getting-started/first-project.md/#flashing)
 
 ## Connect your LED
 
