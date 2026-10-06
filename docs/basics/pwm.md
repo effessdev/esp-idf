@@ -46,7 +46,7 @@ The LEDC peripheral uses two main building blocks:
 
 ## Hardware required
 
-Everything required from [Blinking an LED](/02-basics/01-blink):
+Everything required for [Blinking an LED](blink.md):
 
 - LED
 - Jumper wires
