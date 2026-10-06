@@ -106,7 +106,7 @@ We covered this in previous chapters. Do you still remember it?
     Run the `ESP-IDF: Build Your Project` command from the command palette.
 
 ??? question "How to flash the project"
-    Refer the following section: [Your First Project - Flashing](/01-getting-started/02-first-project/#flashing)
+    Refer to the following section: [Your First Project - Flashing](/getting-started/first-project/#flashing)
 
 ## Connect your LED
 
