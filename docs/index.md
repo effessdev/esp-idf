@@ -1,10 +1,10 @@
 # Welcome!
 
-This 100% free & ad-free course will teach you **embedded systems development** using **ESP32** and the **ESP-IDF framework** by **Espressif Systems**. Learn at your own pace, with zero distractions!
+This is an updated 100% free & ad-free **embedded systems development** course focusing on the ESP32 and the native ESP-IDF framework. Learn at your own pace, with zero distractions!
 
 ## What makes this different
 
-Unlike older courses, this is specifically designed to make you a successful embedded systems engineer in the era of AI.
+Unlike older courses, it skips the stuff AI already does well and focuses strictly on what AI still struggles with.
 
 ### We skip over
 
@@ -13,11 +13,9 @@ Unlike older courses, this is specifically designed to make you a successful emb
 
 ### We focus on
 
-- guiding AI into writing clean code
-- reviewing AI-generated code
-- debugging using AI
-
-As well as the important fundamentals.
+- learning the fundamentals
+- writing code using AI efficiently
+- reviewing what the AI generates
 
 ## Why ESP32
 
