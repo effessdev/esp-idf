@@ -91,7 +91,7 @@ void app_main(void)
     };
     ledc_channel_config(&ledc_channel);
 
-    ESP_LOGI("MAIN", "Setting LED to 50%% brightness...");
+    ESP_LOGI("MAIN", "Setting LED to 50% brightness...");
 
     // Set duty cycle to ~50% (512 out of 1023)
     ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 512);
