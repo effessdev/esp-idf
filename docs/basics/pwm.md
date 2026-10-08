@@ -40,11 +40,11 @@ The ESP32 includes a dedicated hardware module called **LEDC** (LED Control). On
 
 The LEDC peripheral uses two main building blocks:
 
-1. **Timer**: Defines the timing properties:
-   - **Frequency**: How many times per second the PWM signal repeats.
-   - **Bit resolution** or **duty resolution**: How fine your brightness control is. For example, a **10-bit resolution** gives $2^{10} = 1024$ discrete steps (`0` to `1023`).
-2. **Channel**: Defines the output state:
-   - Sets the **duty cycle** (brightness level).
+1. **Timer**:
+   - Sets the **frequency**.
+   - Sets the **bit resolution** or **duty resolution**.
+2. **Channel**:
+   - Sets the **duty cycle**.
    - Maps the timer signal to a specific physical GPIO pin.
 
 ## Hardware required
