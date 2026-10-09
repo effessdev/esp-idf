@@ -14,6 +14,8 @@ Create a new empty project using the `sample_project` template. We covered it in
 
 ## Write the code
 
+The code is self-explanatory:
+
 ```c
 // Include required headers
 #include <stdio.h>
@@ -47,12 +49,13 @@ void app_main(void)
         state = !state;
 
         // Stop execution for 1000 ms (1 second)
+        // More about `pdMS_TO_TICKS` later
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
 ```
 
-Here, `pdMS_TO_TICKS` is a function-like macro that converts milliseconds to ticks. `vTaskDelay` only accepts ticks.
+Here, `pdMS_TO_TICKS` is a function-like macro that converts milliseconds to ticks. `vTaskDelay` only accepts ticks. If you do not know about macros, learn it right now by asking an AI. It's something that we use regularly.
 
 ## Improving the code
 
