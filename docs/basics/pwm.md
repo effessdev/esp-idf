@@ -3,15 +3,15 @@
 !!! warning "Draft"
     This chapter is not completed yet.
 
-So far, we have only turned our LED fully **ON** (HIGH voltage) or fully **OFF** (LOW voltage). But what if you want to set the LED to half brightness, or make it smoothly pulse like a "breathing" light?
+So far, we have only turned our LED fully ON (HIGH voltage) or fully OFF (LOW voltage). But what if you want to set the LED to half brightness, or make it smoothly pulse like a "breathing" light?
 
-Digital pins on the ESP32 can only output either 3.3 V or 0 V. They cannot natively output an intermediate voltage like 1.65 V. To solve this, we use a technique called **PWM**.
+Digital pins on the ESP32 can only output either 3.3 V or 0 V. They cannot natively output an intermediate voltage like 1.65 V. To solve this, we use a technique called **Pulse Width Modulation** (or PWM).
 
 ## Key concepts
 
 ### What is PWM?
 
-**PWM** stands for **Pulse Width Modulation**. It works by switching the GPIO pin between HIGH and LOW thousands of times per second, far faster than human eyes can notice.
+It works by switching the GPIO pin between HIGH and LOW thousands of times per second, far faster than human eyes can notice.
 
 Because the switching happens so quickly, your eyes don't see flickering. Instead, they perceive an average brightness depending on how long the pin remains HIGH during each cycle.
 
@@ -22,6 +22,9 @@ Because the switching happens so quickly, your eyes don't see flickering. Instea
     - **50% duty cycle**: The pin is HIGH for half the time and LOW for half the time (LED appears at half brightness).
     - **100% duty cycle**: The pin is always HIGH (LED is at full brightness).
 - **Frequency**: How many duty cycles occur per second (measured in Hertz, Hz). For LEDs, a frequency around 5000 Hz (5 kHz) ensures smooth lighting with zero visible flicker.
+- **Duty resolution and duty**: Used for setting the duty cycle. For example:
+    - Setting the duty resolution to 10 bits allows $2^{10} = 1024$ duty values (from $0$ to $1023$).
+    - Setting the duty to 50% of 1023 (approximately 512) makes the brightness 50% (ON from 0 to 511, OFF from 512 to 1023).
 
 ### Other applications of PWM
 
@@ -37,12 +40,18 @@ The ESP32 includes a dedicated hardware module called **LEDC** (LED Control). On
 
 The LEDC peripheral uses two main building blocks:
 
-1. **Timer**: Defines the timing properties:
-   - **Frequency**: How many times per second the PWM signal repeats.
-   - **Bit resolution** or **duty resolution**: How fine your brightness control is. For example, a **10-bit resolution** gives $2^{10} = 1024$ discrete steps (`0` to `1023`).
-2. **Channel**: Defines the output state:
-   - Sets the **duty cycle** (brightness level).
+1. **Timer**:
+   - Sets the **frequency**.
+   - Sets the **bit resolution** or **duty resolution**.
+2. **Channel**:
+   - Sets the **duty cycle**.
    - Maps the timer signal to a specific physical GPIO pin.
+
+The original ESP32 had 8 timers and 16 channels. 4 timers are low speed mode and the other 4 are high speed mode (numbered from 0 to 4).
+
+Newer ESP32 only include low-speed mode timers and channels. So, we always use that.
+
+There is another attribute called `hpoint` (high point), which is set to 0 by default, meaning the PWM output turns HIGH right at the beginning of the timer cycle (`count = 0`) and stays HIGH until `count == duty`.
 
 ## Hardware required
 
@@ -88,7 +97,7 @@ void app_main(void)
     };
     ledc_channel_config(&ledc_channel);
 
-    ESP_LOGI("MAIN", "Setting LED to 50%% brightness...");
+    ESP_LOGI("MAIN", "Setting LED to 50% brightness...");
 
     // Set duty cycle to ~50% (512 out of 1023)
     ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 512);

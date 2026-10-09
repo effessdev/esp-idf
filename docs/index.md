@@ -23,7 +23,7 @@ ESP32 microcontrollers are cheap, and comes with WiFi and Bluetooth bulit-in. Ex
 
 ## Why ESP-IDF Over Arduino Core
 
-Since the purpose of this course is to learn embedded systems, using a low level framework like ESP-IDf is benefitial as it exposes many details that Arduino Core abstracts away. ESP-IDF is designed for commercial-grade products rather than simple hobby prototypes.
+Since the purpose of this course is to learn embedded systems, using a low level framework like ESP-IDF is benefitial as it exposes many details that Arduino Core abstracts away. ESP-IDF is designed for commercial-grade products rather than simple hobby prototypes.
 
 ## Current state of the course
 
