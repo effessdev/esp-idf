@@ -53,15 +53,6 @@ Newer ESP32 only include low-speed mode timers and channels. So, we always use t
 
 There is another attribute called `hpoint` (high point), which is set to 0 by default, meaning the PWM output turns HIGH right at the beginning of the timer cycle (`count = 0`) and stays HIGH until `count == duty`.
 
-## Hardware required
-
-Everything required for [Blinking an LED](blink.md):
-
-- LED
-- Jumper wires
-- A 220-330 Ω resistor
-- Breadboard
-
 ## The code
 
 Let's write a simple program to configure the LEDC peripheral and set our LED to roughly 50% brightness:
