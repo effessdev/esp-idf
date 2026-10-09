@@ -47,7 +47,7 @@ The LEDC peripheral uses two main building blocks:
    - Sets the **duty cycle**.
    - Maps the timer signal to a specific physical GPIO pin.
 
-The original ESP32 had 8 timers and 16 channels. 4 timers are low speed mode and the other 4 are high speed mode (numbered from 0 to 4).
+The original ESP32 had 8 timers and 16 channels. 4 timers are low speed mode and the other 4 are high speed mode (each numbered from 0 to 4).
 
 Newer ESP32 only include low-speed mode timers and channels. So, we always use that.
 
