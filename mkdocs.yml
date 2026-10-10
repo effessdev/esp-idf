@@ -66,7 +66,7 @@ nav:
       - Installation: getting-started/install.md
       - Your first project: getting-started/first-project.md
   - Basics:
-      - Shopping list: basics/shopping.md
+      - Prerequisites: basics/prerequisites.md
       - Blinking an LED: basics/blink.md
       - Hardware interrupts: basics/hardware-interrupts.md
       - Pulse Width Modulation: basics/pwm.md
