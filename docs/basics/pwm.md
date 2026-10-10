@@ -224,10 +224,12 @@ Build and flash this code to see your LED smoothly pulsing!
 
 ## Test your knowledge
 
+Try answering the questions below:
+
 ??? question "What is the difference between duty cycle and duty?"
     Duty cycle is the percentage of time the signal stays HIGH. Duty is the numerical value you configure to control that percentage (more about duty above).
 
-- What are the roles of the Timer and Channel inside the ESP32's LEDC peripheral?
+!!! question "What are the roles of the Timer and Channel inside the ESP32's LEDC peripheral?"
 
 ??? question "If the timer resolution is configured to 8-bit (`LEDC_TIMER_8_BIT`), what duty value corresponds to 100% brightness?"
     For an 8-bit timer resolution ($2^8 = 256$), the duty values range from 0 to 255. So, **255 corresponds to 100% brightness**.

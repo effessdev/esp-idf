@@ -32,5 +32,6 @@ No. I still use AI extensively for:
 - Double-checking factual accuracy.
 - Learning complex topics so I can explain them clearly.
 - Polishing grammar and flow in non-critical sections.
+- Creating the initial draft.
 
 Now, [click here to return to the homepage](index.md).

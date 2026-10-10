@@ -70,3 +70,4 @@ nav:
       - Blinking an LED: basics/blink.md
       - Hardware interrupts: basics/hardware-interrupts.md
       - Pulse Width Modulation: basics/pwm.md
+      - Timers: basics/timers.md
