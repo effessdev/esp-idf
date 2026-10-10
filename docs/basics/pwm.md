@@ -1,8 +1,5 @@
 # Controlling LED Brightness with PWM
 
-!!! warning "Draft"
-    This chapter is not completed yet.
-
 So far, we have only turned our LED fully ON (HIGH voltage) or fully OFF (LOW voltage). But what if you want to set the LED to half brightness, or make it smoothly pulse like a "breathing" light?
 
 Digital pins on the ESP32 can only output either 3.3 V or 0 V. They cannot natively output an intermediate voltage like 1.65 V. To solve this, we use a technique called **Pulse Width Modulation** (or PWM).
@@ -42,14 +39,14 @@ The LEDC peripheral uses two main building blocks:
 
 1. **Timer**:
    - Sets the **frequency**.
-   - Sets the **bit resolution** or **duty resolution**.
+   - Sets the **duty resolution**.
 2. **Channel**:
    - Sets the **duty cycle**.
    - Maps the timer signal to a specific physical GPIO pin.
 
-The original ESP32 had 8 timers and 16 channels. 4 timers are low speed mode and the other 4 are high speed mode (each numbered from 0 to 4).
+#### Times and channels
 
-Newer ESP32 only include low-speed mode timers and channels. So, we always use that.
+The original ESP32 had 8 timers and 16 channels. 4 timers are low speed mode and the other 4 are high speed mode (each numbered from 0 to 4). Newer ESP32 only include low-speed mode timers and channels. So, we always use that.
 
 There is another attribute called `hpoint` (high point), which is set to 0 by default, meaning the PWM output turns HIGH right at the beginning of the timer cycle (`count = 0`) and stays HIGH until `count == duty`.
 
@@ -68,27 +65,37 @@ void app_main(void)
 {
     // 1. Configure the LEDC Timer
     ledc_timer_config_t ledc_timer = {
-        .speed_mode       = LEDC_LOW_SPEED_MODE,
+        .speed_mode       = LEDC_LOW_SPEED_MODE, // always
+        // You can choose any one of the 4 timers (0, 1, 2, or 3)
         .timer_num        = LEDC_TIMER_0,
         .duty_resolution  = LEDC_TIMER_10_BIT,
         .freq_hz          = 5000,
+        // Ignore the following configuration for now
         .clk_cfg          = LEDC_AUTO_CLK
     };
     ledc_timer_config(&ledc_timer);
 
     // 2. Configure the LEDC Channel
     ledc_channel_config_t ledc_channel = {
-        .speed_mode     = LEDC_LOW_SPEED_MODE,
+        .speed_mode     = LEDC_LOW_SPEED_MODE, // always
+        // You can choose any channel
         .channel        = LEDC_CHANNEL_0,
+        // Select your timer
         .timer_sel      = LEDC_TIMER_0,
+        // Disable interrupts (we don't need them for this)
         .intr_type      = LEDC_INTR_DISABLE,
+        // Select your LED GPIO
         .gpio_num       = GPIO_NUM_22,
         .duty           = 0, // Start with LED turned OFF
+        // We covered hpoint before
         .hpoint         = 0
     };
     ledc_channel_config(&ledc_channel);
 
     ESP_LOGI("MAIN", "Setting LED to 50% brightness...");
+
+    // Wait 5 seconds
+    vTaskDelay(pdMS_TO_TICKS(5000));
 
     // Set duty cycle to ~50% (512 out of 1023)
     ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, 512);
@@ -98,16 +105,9 @@ void app_main(void)
 }
 ```
 
-## How it works
-
-1. **Timer setup**: We configure `LEDC_TIMER_0` with a 10-bit resolution (`0` to `1023`) running at 5000 Hz.
-2. **Channel setup**: We attach `LEDC_CHANNEL_0` to `GPIO_NUM_22` and tell it to use `LEDC_TIMER_0`.
-3. **`ledc_set_duty()`**: Prepares the new brightness value in memory (`512` is half of `1023`).
-4. **`ledc_update_duty()`**: Latches the prepared value into hardware logic so the physical pin starts outputting the new PWM signal.
-
 ## Improving the code
 
-The standard practice is to define macros for storing configurations like this on top of the main file. By doing this, you will have all configurations in one place:
+The standard practice is to define macros for storing configurations on the top of the file. By doing this, you will have all configurations in one place:
 
 ```c
 #include <stdio.h>
@@ -148,6 +148,8 @@ void app_main(void)
     ledc_channel_config(&ledc_channel);
     
     ESP_LOGI(TAG, "Setting LED to 50%% brightness...");
+    vTaskDelay(pdMS_TO_TICKS(5000));
+    
     ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, 512);
     ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
 }
@@ -216,6 +218,10 @@ Build and flash this code to see your LED smoothly pulsing!
 
 ## Test your knowledge
 
-- What is a duty cycle, and how does changing it alter the perceived brightness of an LED?
+??? question "What is the difference between duty cycle and duty?"
+    Duty cycle is the percentage of time the signal stays HIGH. Duty is the numerical value you configure to control that percentage (more about duty above).
+
 - What are the roles of the Timer and Channel inside the ESP32's LEDC peripheral?
-- If the timer resolution is configured to 8-bit (`LEDC_TIMER_8_BIT`), what duty cycle value corresponds to 100% brightness?
+
+??? question "If the timer resolution is configured to 8-bit (`LEDC_TIMER_8_BIT`), what duty value corresponds to 100% brightness?"
+    For an 8-bit timer resolution ($2^8 = 256$), the duty values range from 0 to 255. So, **255 corresponds to 100% brightness**.
