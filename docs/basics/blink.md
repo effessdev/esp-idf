@@ -10,7 +10,11 @@ What we are going to now is to make the GPIO22 pin HIGH and LOW continuously (li
 
 ## Create a new empty project
 
-Create a new empty project using the `sample_project` template. We covered it in this chapter: [Your First Project](../getting-started/first-project.md). But try to do it yourself without looking.
+Create a new empty project using the `sample_project` template. We covered it in this chapter: [Your First Project](../getting-started/first-project.md). Name it `led_blink`.
+
+## Initialize Git
+
+Run `git init` to initialize the repository. Commit the changes with the commit message "initial commit" and optionally push to GitHub.
 
 ## Write the code
 
@@ -57,6 +61,8 @@ void app_main(void)
 
 Here, `pdMS_TO_TICKS` is a function-like macro that converts milliseconds to ticks. `vTaskDelay` only accepts ticks. If you do not know about macros, learn it right now by asking an AI. It's something that we use regularly.
 
+Now, you can commit these changes.
+
 ## Improving the code
 
 `GPIO_NUM22` and the `TAG` are used in multiple parts of the code. It's better to define them in the top of the file, rather than repeating it each time:
@@ -91,6 +97,8 @@ void app_main(void)
     }
 }
 ```
+
+Commit these changes with a proper commit message.
 
 ## Build & flash
 

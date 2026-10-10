@@ -2,7 +2,7 @@
 
 Hardware interrupts are hardware signals that instantly pause the normal program flow to handle external events such as a button press, without wasting CPU cycles on continuous polling.
 
-Let's update our code such that the LED can be toggled using a button press.
+Let's update our `led_blink` project such that the LED can be toggled using a button press.
 
 The connections are the same as before (LED & resistor). But we have to connect a jumper wire to GPIO23. Leave the other end of the jumper wire not connected to anything.
 
@@ -90,6 +90,8 @@ void app_main(void)
 
 Now, after building and flashing, touch the button pin to GND. If you did everything correctly, the LED will respond to the input.
 
+Now that the code has been tested, you can commit and push your changes.
+
 ## Improving the code
 
 Currently, we are toggling the LED directly inside the ISR handler. This is not recommended because ISRs have the highest priority, and will block anything else that's running until it finishes.
@@ -169,6 +171,8 @@ void app_main(void)
 Now, our code is much better!
 
 While you might say this is not a button (it's a wire, obviously), this is what exactly happens inside a physical button. You connect one side of the button to GPIO23, and the other to GND. Pressing it will close the circuit (like touching the wire to GND).
+
+Commit the changes. In the next chapter, we are going to build the next project. Stay tuned!
 
 ## Test your knowledge
 

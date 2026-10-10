@@ -50,7 +50,11 @@ The original ESP32 had 8 timers and 16 channels. 4 timers are low speed mode and
 
 There is another attribute called `hpoint` (high point), which is set to 0 by default, meaning the PWM output turns HIGH right at the beginning of the timer cycle (`count = 0`) and stays HIGH until `count == duty`.
 
-## The code
+## Setup the project
+
+Like we did before, create a new project named `led_pwm` using the `sample_project` template. Initialize the repository and do the initial commit.
+
+## Let's write the code!
 
 Let's write a simple program to configure the LEDC peripheral and set our LED to roughly 50% brightness:
 
@@ -104,6 +108,8 @@ void app_main(void)
     ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
 }
 ```
+
+You can commit your changes whenever you feel you've completed a step. This allows you to experiment with the code and revert to the last completed step if something goes wrong.
 
 ## Improving the code
 
