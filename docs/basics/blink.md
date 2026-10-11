@@ -22,41 +22,41 @@ The code is self-explanatory:
 
 ```c
 // Include required headers
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include <stdio.h>
 
-void app_main(void)
-{
-    // Clean up previous configuration
-    gpio_reset_pin(GPIO22);
+void app_main(void) {
+  // Clean up previous configuration
+  gpio_reset_pin(GPIO_NUM_22);
 
-    // Configure the pin for voltage output
-    gpio_set_direction(GPIO22, GPIO_MODE_OUTPUT);
+  // Configure the pin for voltage output
+  gpio_set_direction(GPIO_NUM_22, GPIO_MODE_OUTPUT);
 
-    // Store the current state (0 = OFF, 1 = ON)
-    uint8_t state = 0;
+  // Store the current state (0 = OFF, 1 = ON)
+  uint8_t state = 0;
 
-    ESP_LOGI("MAIN", "Starting LED...")
+  ESP_LOGI("MAIN", "Starting LED...");
 
-    // Infinite loop
-    while (1) {
-        // Set GPIO level (0 = OFF, 1 = ON)
-        gpio_set_level(GPIO22, state);
+  // Infinite loop
+  while (1) {
+    // Set GPIO level (0 = OFF, 1 = ON)
+    gpio_set_level(GPIO_NUM_22, state);
 
-        // Log the current state
-        ESP_LOGI("MAIN", "LED State: %s", state ? "ON" : "OFF");
+    // Log the current state
+    ESP_LOGI("MAIN", "LED State: %s", state ? "ON" : "OFF");
 
-        // Toggle state for next iteration
-        state = !state;
+    // Toggle state for next iteration
+    state = !state;
 
-        // Stop execution for 1000 ms (1 second)
-        // More about `pdMS_TO_TICKS` later
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+    // Stop execution for 1000 ms (1 second)
+    // More about `pdMS_TO_TICKS` later
+    vTaskDelay(pdMS_TO_TICKS(1000));
+  }
 }
+
 ```
 
 Here, `pdMS_TO_TICKS` is a function-like macro that converts milliseconds to ticks. `vTaskDelay` only accepts ticks. If you do not know about macros, learn it right now by asking an AI. It's something that we use regularly.
