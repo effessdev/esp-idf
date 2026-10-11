@@ -27,7 +27,7 @@ Since the purpose of this course is to learn embedded systems, using a low level
 
 ## Is this course AI-generated?
 
-No. [Here is why.](why-not-ai.md)
+No. [Click here](why-not-ai.md) to learn why this is not AI-generated, this course was made, and what it prioritizes.
 
 ## Current state of the course
 

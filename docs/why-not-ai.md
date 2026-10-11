@@ -10,11 +10,17 @@ I previously created an embedded C course using AI, but I deleted it due to the 
 
 This course is designed to fix those problems.
 
-## The goal
+## The goals
 
-My goal is to ensure you never have to stop and wonder, "What does that mean?" while reading.
+### No disruptions
+
+I will ensure that you never have to stop and wonder, "What does that mean?" while reading.
+
+Unlike a documentation, this is an opinionated course, meant to be read from top to bottom, from the first chapter to the last chapter. Everything is explained either immediately as you read, or beforehand. Meaning you shouldn't need to scroll down a bit to check for the explanation, and scroll back up. But feel free to skip things you already know.
 
 If I skip an explanation that isn't immediately relevant (such as legacy configurations that exist purely for backward compatibility), I will let you know upfront. For example, *"This value exists for legacy purposes, so we don't need to worry about it."*
+
+### No overwhelm
 
 Rather than presenting code first and explaining it afterward (the typical AI approach), I will build your mental model first and define key terminology before introducing the code, allowing you to grasp it immediately.
 
@@ -27,11 +33,12 @@ I will do my best to avoid overwhelming you.
 
 ## Does that mean I don't use AI at all?
 
-No. I still use AI extensively for:
+No. I still use AI for:
 
 - Double-checking factual accuracy.
 - Learning complex topics so I can explain them clearly.
-- Polishing grammar and flow in non-critical sections.
-- Creating the initial draft.
+- Polishing grammar and flow for **certain sentences or paragraph only**.
+- Creating the initial draft (only occasionally).
+- Generating code
 
 Now, [click here to return to the homepage](index.md).

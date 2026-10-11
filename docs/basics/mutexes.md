@@ -236,7 +236,6 @@ void blink_led(int type)
     int interval_ms = 0;
     int total_blinks = 0;
 
-    // Configure blink parameters depending on the requested type
     if (type == BLINK_TYPE_FAST)
     {
         // Type 1: Fast blink
@@ -254,9 +253,6 @@ void blink_led(int type)
         return;
     }
 
-    // Try to take the mutex.
-    // `portMAX_DELAY` is a macro that means "wait forever".
-    // That means, `xSemaphoreTake()` will try to take the mutex indefinitely until it becomes available.
     if (xSemaphoreTake(led_mutex, portMAX_DELAY) == pdTRUE)
     {
         // Perform the blinking sequence
