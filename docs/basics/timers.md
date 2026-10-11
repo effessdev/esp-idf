@@ -19,16 +19,21 @@ To fix this, we use a **timer**.
 
 A timer allows us to schedule an action to happen (or a function to be called) after a specified amount of time.
 
-What we are going to do is:
+How it works in our use case:
 
 1. We press the button and the ISR handler adds a press event to the queue
 2. The button task consumes the event from the queue, and schedules a `flash_led` function to be called after 1 second using a timer
 
 Now, the job of the button task is complete! It can do anything else, the timer will call the `flash_led` function after 1 second.
 
-### Callback function
+### Callback functions
 
-Here, we are giving the flash function to the timer and telling it to call it after 1 second. These kinds of functions are called **callback functions**.
+Here,
+
+- We give `flash_led` function to the timer.
+- The timer calls it later.
+
+These kinds if functions, which we gave to be called back later (like `flash_led`), are called **callback functions**.
 
 They aren't a different type of function. They are called so just because of it's purpose. It just like any other C function.
 
