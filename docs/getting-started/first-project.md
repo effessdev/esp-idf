@@ -113,15 +113,18 @@ If you are on Windows, flashing might show this error:
 A fatal error occurred: Could not connect to an Espressif device on any of the 1 available serial ports.
 ```
 
-If that happens, the next time you try, press and hold the BOOT button on your board as soon as you see `Connecting...`. After some time, the `Connecting...` will stop and you will see several different outputs. Stop holding the BOOT button when you see these somewhere:
+If that happens, the next time you try, press and hold the BOOT button on your board as soon as you see `Connecting...`. After some time, the `Connecting...` will stop and you will see several different outputs. You can stop holding when you see progress bars like this:
 
 ```plaintext
-Uploading stub flasher...
-Running stub flasher...
-Stub flasher running.
+Writing at xxxxxxxxxx [======>              ] xxx.x% xxxx/xxxxx bytes...
 ```
 
-It might require some trial and error to find out how long you will have to hold the BOOT button.
+Once the progress bar reaches the end, you will see this:
+
+```
+Flash Done ⚡️
+Flash has finished. You can monitor your device with 'ESP-IDF: Monitor Device'
+```
 
 ### If you are using Linux (e.g., Ubuntu)
 
@@ -138,6 +141,13 @@ If that happens, run this command, log out, log back in (or reboot), and try fla
 
 ```bash
 sudo usermod -aG dialout $USER
+```
+
+If the flash succeeds, you will get this:
+
+```
+Flash Done ⚡️
+Flash has finished. You can monitor your device with 'ESP-IDF: Monitor Device'
 ```
 
 You have to do it only once per system. Subsequent flashing will work without running this command.
