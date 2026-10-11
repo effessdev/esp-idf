@@ -23,13 +23,12 @@ static void IRAM_ATTR my_isr_handler(void* arg)
 }
 ```
 
-`IRAM_ATTR` is a preprocessor macro that makes this function load directly into internal instruction RAM (IRAM), instead of running them from the external flash memory.
+`IRAM_ATTR` is a preprocessor macro that makes this function load directly into internal instruction RAM (IRAM), instead of running them from the external flash memory. This makes the loading much faster.
 
-**But aren't functions already stored in the RAM?**
+!!! question "But aren't functions already stored in RAM?"
+    On most standard computers, all programs and functions are fully loaded in to the RAM before they run, **but not in ESP32**.
 
-On most standard computers, all programs and functions are fully loaded in to the RAM before they run, **but not in ESP32**.
-
-ESP32 (and other MCUs) have very limited RAM (less than 1 MB). So, functions remain in the external Flash memory chip and are read on the fly through a small cache.
+    ESP32 (and other MCUs) have very limited RAM (less than 1 MB). So, functions remain in the external Flash memory chip and are read on the fly through a small cache.
 
 ## How we are going to do this (conceptually)
 
