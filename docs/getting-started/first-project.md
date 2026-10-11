@@ -9,7 +9,7 @@ Hardware required:
 
 We are going to use the `ESP-IDF: New Project` command from the command palette to create the project.
 
-- Open the command palette (I hope you remember the shortcut)
+- Open the command palette using `Ctrl + Shift + P`.
 - Search for and click on `ESP-IDF: New Project`, and wait.
 - Select your ESP-IDF version (you might see only one version since we only installed one), and wait.
 - A new tab will pop up. Inside that tab, under `ESP-IDF Templates`, select the `sample_project` template and click the "Create Project" button.
