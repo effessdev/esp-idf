@@ -1,8 +1,5 @@
 # Mutexes
 
-!!! warning "Draft"
-    This chapter is not completed yet.
-
 You might have heard this buzzword before. But it's not as complex as it seems. Let me show you exactly what they are by showing a specific situation.
 
 ## Let's create a function: `blink_led(int type)`
