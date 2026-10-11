@@ -35,6 +35,7 @@ You need to configure your project whenever you:
 
 - Start a new project (like we did now)
 - Add, remove, or rename source code files
+- Include new headers (e.g., `#include esp_log.h`)
 - And so on.
 
 But it's safe to do again and again. Since we just created a new project, let's run it by clicking the `ESP-IDF: Run idf.py reconfigure Task` command from the command palette.
@@ -183,7 +184,4 @@ Test your knowledge by answering the following questions:
 
 - How do we create a new ESP-IDF project? Which template should we use for an empty project?
 - When do we need to configure our project? How can we do it? Is it safe to do it repeatedly?
-- What does the "I" in `ESP_LOGI` stand for?
-- How do we build an ESP-IDF project?
-- How do we flash an ESP-IDF project to the ESP32?
-- What is monitoring? How can we do it?
+- How to build, flash, and monitor.
