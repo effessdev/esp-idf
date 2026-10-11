@@ -63,6 +63,7 @@ Let's write a simple program to configure the LEDC peripheral and set our LED to
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/ledc.h"
+#include "driver/gpio.h"
 #include "esp_log.h"
 
 void app_main(void)
@@ -120,6 +121,7 @@ The standard practice is to define macros for storing configurations on the top 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/ledc.h"
+#include "driver/gpio.h"
 #include "esp_log.h"
 
 #define LEDC_GPIO       GPIO_NUM_22
@@ -161,7 +163,7 @@ void app_main(void)
 }
 ```
 
-## Improving the code further (Breathing light effect)
+## Breathing light effect
 
 Setting a static brightness is a good start, but we can continuously adjust the duty cycle in a loop to create a smooth "breathing" light effect:
 
@@ -170,6 +172,7 @@ Setting a static brightness is a good start, but we can continuously adjust the 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "driver/ledc.h"
+#include "driver/gpio.h"
 
 #define LEDC_GPIO       GPIO_NUM_22
 #define LEDC_MODE       LEDC_LOW_SPEED_MODE
