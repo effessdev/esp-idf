@@ -73,3 +73,4 @@ nav:
       - Pulse Width Modulation: basics/pwm.md
       - Timers: basics/timers.md
       - Mutexes: basics/mutexes.md
+      - Using multiple files: basics/multiple-files.md
