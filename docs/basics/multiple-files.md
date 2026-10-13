@@ -35,7 +35,6 @@ The new project layout will look like this:
 Paste the following code in `led.c` file. I am skipping the explanations since we already know this.
 
 ```c
-#include "led.h"
 #include "driver/gpio.h"
 #include <stdbool.h>
 
@@ -99,7 +98,6 @@ If we are using `#include "driver/gpio.h"` in `main.c`, this isn't required. We 
 ```c
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "led.h"
 #include <stdio.h>
 
 void app_main(void) {
@@ -121,7 +119,6 @@ Our `main.c` calls `led_init()` and `led_toggle()`. But `main.c` has no access t
 ```c
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "led.h"
 #include <stdio.h>
 
 void led_init(void);    // Declaration for led_init()
@@ -142,3 +139,46 @@ Now, when the compiler compiles this file, it leaves placeholders for the addres
 Now, you can test the code.
 
 ## Improving the code
+
+Instead of adding the declarations in `main.c`, we use something called **header files**. They have the `.h` file extension.
+
+Remove the declarations from `main.c`, and move them to a new file `main/led.h`. You can add comments on top of the declarations like this:
+
+```c
+// Initialize the LED GPIO. Must be called once before led_toggle().
+void led_init(void);
+
+// Toggle the LED state (on -> off, off -> on).
+void led_toggle(void);
+```
+
+To include these declarations, we use `#include "led.h"`. Update `main.c` like this:
+
+```c
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include <stdio.h>
+#include "led.h" // New header included
+
+void app_main(void) {
+  led_init();
+
+  while (1) {
+    led_toggle();
+    vTaskDelay(pdMS_TO_TICKS(500));
+  }
+}
+```
+
+### How `#include` works
+
+Before compiling the code, there is another step called **preprocessing**. In this step, `#include "led.h"` is replaced with the contents of `led.h`.
+
+So, this is functionally similar to putting the declarations in `main.c` itself. But by separating declarations into a separate file, we can keep `main.c` cleaner.
+
+### FAQs
+
+Frequently asked questions:
+
+??? question "Can we use `#include functions.c` in `main.c`?"
+    Yes, and it works in this case. But it's considered as a bad practice. If we do that, the final file would contain the contents of both `main.c` and `functions.c`, which will be large. Even if we only changed `functions.c`, the entire file will need to be recompiled, which is slow.
