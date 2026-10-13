@@ -1,8 +1,16 @@
 # Contributing
 
-## Admonition Blocks
+## Rules
 
-### Types
+- Do not rename/move any files or directories
+- File names should reflect the content, and should be short and less specific so later changes won't misrepresent the URL
+- Internal folder structure need not to be exactly the same as the navigation
+
+## Writing help
+
+### Admonition Blocks
+
+#### Types
 
 * **`note`**
 * **`abstract`** (Aliases: `summary`, `tldr`)
@@ -17,7 +25,7 @@
 * **`example`**
 * **`quote`** (Alias: `cite`)
 
-### Collapsible State Modifiers
+#### Collapsible State Modifiers
 
 - `???` = Collapsed by default (collapsible).
 - `???+` = Expanded by default, but the user can still click to close it.
