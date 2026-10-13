@@ -1,7 +1,8 @@
 site_name: ESP-IDF Course (by EffessDev)
 site_description: 100% free, ad-free embedded systems course on ESP32 & ESP-IDF for the age of AI. Fully project based and practical. Focuses on the fundamentals, AI integrated workflows and what AI still struggles with.
 site_author: EffessDev
-repo_url: https://github.com/effessdev/esp-idf
+site_url: https://effessdev.github.io/esp-idf/
+repo_url: https://github.com/effessdev/esp-idf/
 copyright: >
   Copyright © Faseeh Zaman F S. All rights reserved. Found an issue? <a href="https://github.com/effessdev/esp-idf/issues" style="text-decoration: underline; text-underline-offset: 4px;">Open an issue</a> or <a href="https://github.com/effessdev/esp-idf/pulls" style="text-decoration: underline; text-underline-offset: 4px;">submit a pull request</a> on GitHub. Found this useful? <a href="https://github.com/effessdev/esp-idf" style="text-decoration: underline; text-underline-offset: 4px;">Drop a star</a> to support this project.
 
