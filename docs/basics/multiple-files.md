@@ -95,16 +95,18 @@ If we are using `#include "driver/gpio.h"` in `main.c`, this isn't required. We 
 
 ## Step 4: Update `main.c`
 
+Now that `led.c` has been added, you can call the functions in `main.c`:
+
 ```c
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include <stdio.h>
 
 void app_main(void) {
-  led_init();
+  led_init(); // from led.c
 
   while (1) {
-    led_toggle();
+    led_toggle(); // from led.c
     vTaskDelay(pdMS_TO_TICKS(500));
   }
 }
