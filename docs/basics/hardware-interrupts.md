@@ -95,6 +95,8 @@ Now that the code has been tested, you can commit and push your changes.
 
 Currently, we are toggling the LED directly inside the ISR handler. This is not recommended because ISRs have the highest priority, and will block anything else that's running until it finishes.
 
+Currently, this is not a problem. But you will learn about running things in parallel later in the course. In those cases, it's crucial to separate events from function to ensure other tasks aren't blocked.
+
 Instead, we use a pattern where we:
 
 - Create a queue
