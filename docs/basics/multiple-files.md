@@ -178,6 +178,9 @@ Before compiling the code, there is another step called **preprocessing**. In th
 
 So, this is functionally similar to putting the declarations in `main.c` itself. But by separating declarations into a separate file, we can keep `main.c` cleaner.
 
+!!! warning "Note"
+    Add `#pragma once` on the very top of the header files to make sure they don't get included multiple times.
+
 ### FAQs
 
 Frequently asked questions:
