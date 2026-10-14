@@ -9,26 +9,9 @@ Here is how we approach this:
 
 Now, `app_main()` can do whatever else. The function that runs in parallel is called a "Task". In this case, the function that blinks the LED.
 
-## Where do tasks run?
-
-ESP32s have two processor cores (Core 0 and Core 1). We can configure a task to run on either one of them.
-
 ## Task priority
 
-Task priority is a number assigned to a task that represents the priority of the task. Let's consider a situation:
-
-- Task A and Task B are running on the same processor core
-- Task A has priority = 5, while Task B has priority = 6
-
-In this case, only Task B will block the execution of Task A. Only Task B will run.
-
-Task A can only run if:
-
-- Task B temporarily stops itself (using `vTaskDelay()` or similar)
-- Task B permanently stops itself (delete itself)
-- Task B get stopped by another task
-
-If both tasks have the same priority, they run in parallel.
+Task priority is a number assigned to a task that represents the priority of the task. Higher priority tasks block lower priority tasks. Lower priority tasks can only execute if higher priority tasks stop (temporarily or permanently). If both tasks have the same priority, they run in parallel. We'll learn more about these later in the course.
 
 ## Code
 
@@ -67,8 +50,7 @@ void app_main(void) {
         2048,          /* Stack size allocated for the task in bytes */
         NULL,          /* Pointer to input parameters passed to the task (NULL since we aren't giving any input) */
         1,             /* Priority of the task (higher number = higher priority) */
-        NULL,          /* Task handle to track or control the task later (we aren't using this as of now) */
-        1              /* Core ID (0 or 1) */
+        NULL           /* Task handle to track or control the task later (we aren't using this as of now) */
     );
 
     // Now you can do anything else here.
@@ -78,8 +60,5 @@ void app_main(void) {
 
 If you don't give the Code ID argument, the task will be free to float between whichever CPU cores available (Core 0 or Core 1).
 
-## Misconceptions
-
-I said that if both Task A and Task B have the same priority and are pinned to the same CPU core, they run in parallel, right? But in reality, FreeRTOS will share the core between them using a method called "time-slicing". You can learn more about it online.
-
-Also, `app_main()` is also a task. It just starts automatically.
+!!! tip "Tip"
+    `app_main()` is also a task. It just starts automatically.
