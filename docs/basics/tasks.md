@@ -2,12 +2,9 @@
 
 In the previous project, we blinked an LED in GPIO22 in `app_main()` function. But what if we need to keep the LED blinking, while allowing `app_main()` to do other stuff?
 
-Here is how we approach this:
+We do this by creating a "Task" that blinks the LED indefinitely. Tasks are functions that run in parallel to `app_main()`. They can be started from `app_main()`.
 
-- Create a function that blinks the LED indefinitely
-- Start that function as a "Task" from `app_main()`, and let it run in parallel to `app_main()`
-
-Now, `app_main()` can do whatever else. The function that runs in parallel is called a "Task". In this case, the function that blinks the LED.
+Now, `app_main()` can start the blink LED task, let it blink the LED, and focus on other things.
 
 ## Task priority
 
@@ -67,4 +64,4 @@ Now, you can build and flash the code to ensure it's working.
 
 ## Challege (optional)
 
-Connect a new LED to GPIO23 (don't forget the resistor), and create a new task `blink_task_fast()` to blink that second LED faster than the first LED. Start both tasks from `app_main()` (one after the other) with the same priority so that both LEDs are blinking but in different speeds.
+Connect a new LED to GPIO23 (don't forget to add the resistor), and create a new task `blink_task_fast()` to blink that second LED faster than the first LED. Start both tasks from `app_main()` (one after the other) with the same priority so that both LEDs are blinking but in different speeds.
