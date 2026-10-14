@@ -1,7 +1,7 @@
 # Hardware interrupts
 
 !!! warning "Draft"
-    This chapter is not completed yet. You can skip this and check out the next chapter.
+    This chapter is not completed yet. Please skip this and check out the next chapter.
 
 Hardware interrupts are hardware signals that instantly pause the normal program flow to handle external events such as a button press, without wasting CPU cycles on continuous polling.
 
