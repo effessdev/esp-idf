@@ -26,8 +26,22 @@ The tab will refresh, and you will see a form to fill in your project details. F
 
 Click "Create Project" and wait again. After creation, in the new tab that pops up, click "Open Project". This will open your brand new ESP-IDF project in a fresh VS Code window.
 
-!!! note "If you are using Clangd"
-    If you are using Clangd instead of the Microsoft C/C++ extension, run `ESP-IDF: Configure project for ESP-Clang` from the VS Code command palette to make sure Clangd IntelliSense works correctly. Also, make sure both of them aren't activated at the same time, as they can interfere with each other.
+## Install an Extension for Intellisense
+
+We need an extension for proper syntax highlighting and text suggestions.
+
+### Option 1: Microsoft C/C++ extension (easiest to set up)
+
+Install the extensions from the "Extensions" tab. That's it.
+
+### Option 2: Clangd (if you are using a VS Code fork)
+
+Install Clangd from the "Extensions" tab. Then, run `ESP-IDF: Configure project for ESP-Clang` from the VS Code command palette.
+
+### Whatever you choose...
+
+!!! warning "Note"
+    You have to make sure both of them aren't activated at the same time, as they can interfere with each other.
 
 ## Configure your project
 
@@ -45,6 +59,11 @@ This will take some time. While it's working, let's learn what it does:
 - Generates (or regenerates) the build files in the `build` folder
 - Generates `compile_commands.json`, which is essential for Microsoft C/C++ Extension or Clangd to provide IntelliSense
 - And a lot more (just know these two for now)
+
+!!! tip "Troubleshooting tip"
+    Sometimes, error squiggles appear even though your code is completely correct. This typically happens when your `compile_commands.json` file is outdated and hasn't synced with your latest changes.
+
+    To resolve this, run the `ESP-IDF: Run idf.py reconfigure Task` command from the command palette to refresh your project configuration and clear out the false warnings.
 
 ## Let's write some code
 
