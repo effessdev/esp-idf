@@ -58,7 +58,9 @@ void app_main(void) {
 }
 ```
 
-If you don't give the Code ID argument, the task will be free to float between whichever CPU cores available (Core 0 or Core 1).
-
 !!! tip "Tip"
     `app_main()` is also a task. It just starts automatically.
+
+## Challege
+
+Connect a new LED to GPIO23 (don't forget the resistor), and create a new task `blink_task_fast()` to blink that second LED faster than the first LED. Start both tasks from `app_main()` (one after the other) so that both LEDs are blinking but in different speeds.
