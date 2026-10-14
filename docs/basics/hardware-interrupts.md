@@ -141,6 +141,8 @@ static void IRAM_ATTR gpio_isr_handler(void* arg)
     if (current_time - last_interrupt_time > DEBOUNCE_TIME_US) {
         last_interrupt_time = current_time;
         uint32_t gpio_num = (uint32_t) arg;
+
+        // Add event to the queue
         xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
     }
 }
@@ -154,7 +156,6 @@ static void button_task(void* arg)
         if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
             led_state = !led_state;
             gpio_set_level(LED_PIN, led_state);
-            printf("Button pressed on GPIO %lu! LED state: %d\n", io_num, led_state);
         }
     }
 }
