@@ -58,9 +58,11 @@ void app_main(void) {
 }
 ```
 
+Now, you can build and flash the code to ensure it's working.
+
 !!! tip "Tip"
     `app_main()` is also a task. It just starts automatically.
 
-## Challege
+## Challege (optional)
 
 Connect a new LED to GPIO23 (don't forget the resistor), and create a new task `blink_task_fast()` to blink that second LED faster than the first LED. Start both tasks from `app_main()` (one after the other) so that both LEDs are blinking but in different speeds.
