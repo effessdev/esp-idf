@@ -69,8 +69,10 @@ nav:
   - Basics:
       - Prerequisites: basics/prerequisites.md
       - Blinking an LED: basics/blink.md
+      - Tasks: basics/tasks.md
       - Hardware interrupts: basics/hardware-interrupts.md
       - Pulse Width Modulation: basics/pwm.md
       - Timers: basics/timers.md
       - Mutexes: basics/mutexes.md
+      - Hardware Interrupts: basics/hardware-interrupts.md
       - Using multiple files: basics/multiple-files.md
