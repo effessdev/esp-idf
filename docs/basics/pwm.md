@@ -18,7 +18,7 @@ Because the switching happens so quickly, your eyes don't see flickering. Instea
     - **0% duty cycle**: The pin is always LOW (LED is OFF).
     - **50% duty cycle**: The pin is HIGH for half the time and LOW for half the time (LED appears at half brightness).
     - **100% duty cycle**: The pin is always HIGH (LED is at full brightness).
-- **Frequency**: How many duty cycles occur per second (measured in Hertz, Hz). For LEDs, a frequency around 5000 Hz (5 kHz) ensures smooth lighting with zero visible flicker.
+- **Frequency**: How many cycles occur per second (measured in Hertz, Hz). For LEDs, a frequency around 5000 Hz (5 kHz) ensures smooth lighting with zero visible flicker.
 - **Duty resolution and duty**: Used for setting the duty cycle. For example:
     - Setting the duty resolution to 10 bits allows $2^{10} = 1024$ duty values (from $0$ to $1023$).
     - Setting the duty to 50% of 1023 (approximately 512) makes the brightness 50% (ON from 0 to 511, OFF from 512 to 1023).
