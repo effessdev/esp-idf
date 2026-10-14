@@ -6,6 +6,9 @@ Let's have a look at our ESP32 microcontroller:
 
 As you can see, there are a lot of pins underneath it. These are called **GPIO pins** (General Purpose Input Output pins). These pins are the primary way in which the ESP32 control external hardware. Each pin can be turned HIGH voltage or LOW voltage.
 
+!!! warning "Note"
+    All of those pins are not GPIO pins, but the majority are. You will discover other pins (like `GND`) later in the course.
+
 What we are going to now is to make the GPIO22 pin HIGH and LOW continuously (like it's blinking), and connect an LED to that pin so it will turn ON and OFF. No need to worry about why we chose GPIO22 for now.
 
 ## Create a new empty project
