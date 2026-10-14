@@ -24,80 +24,77 @@ Run `git init` to initialize the repository. Commit the changes with the commit 
 The code is self-explanatory:
 
 ```c
-// Include required headers
-#include "driver/gpio.h"
-#include "esp_log.h"
+#include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include <stdio.h>
+#include "driver/gpio.h"
+#include "esp_log.h"
 
-void app_main(void) {
-  // Clean up previous configuration
-  gpio_reset_pin(GPIO_NUM_22);
+void app_main(void)
+{
+    // Clean up previous configuration in GPIO22
+    gpio_reset_pin(GPIO_NUM_22);
 
-  // Configure the pin for voltage output
-  gpio_set_direction(GPIO_NUM_22, GPIO_MODE_OUTPUT);
+    // Configure GPIO22 for voltage output
+    gpio_set_direction(GPIO_NUM_22, GPIO_MODE_OUTPUT);
 
-  // Store the current state (0 = OFF, 1 = ON)
-  uint8_t state = 0;
+    ESP_LOGI("MAIN", "Starting LED...");
 
-  ESP_LOGI("MAIN", "Starting LED...");
+    while (1) {
+        // Set output voltage (1 means HIGH voltage)
+        gpio_set_level(GPIO_NUM_22, 1);
+        ESP_LOGI("MAIN", "LED State: ON");
 
-  // Infinite loop
-  while (1) {
-    // Set GPIO level (0 = OFF, 1 = ON)
-    gpio_set_level(GPIO_NUM_22, state);
+        // Wait 1000 milliseconds (1 second)
+        // pdMS_TO_TICKS() convert milliseconds to ticks (more on that later)
+        vTaskDelay(pdMS_TO_TICKS(1000));
 
-    // Log the current state
-    ESP_LOGI("MAIN", "LED State: %s", state ? "ON" : "OFF");
+        // 0 means LOW voltage
+        gpio_set_level(GPIO_NUM_22, 0);
+        ESP_LOGI("MAIN", "LED State: OFF");
 
-    // Toggle state for next iteration
-    state = !state;
-
-    // Stop execution for 1000 ms (1 second)
-    // More about `pdMS_TO_TICKS` later
-    vTaskDelay(pdMS_TO_TICKS(1000));
-  }
+        // Wait for 1 second (again)
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 }
-
 ```
 
 Here, `pdMS_TO_TICKS` is a function-like macro that converts milliseconds to ticks. `vTaskDelay` only accepts ticks. If you do not know about macros, learn it right now by asking an AI. It's something that we use regularly.
 
-Now, you can commit these changes.
+You can commit the changes to your repository now.
 
 ## Improving the code
 
-`GPIO_NUM22` and the `TAG` are used in multiple parts of the code. It's better to define them in the top of the file, rather than repeating it each time:
+`GPIO_NUM22` and the `TAG` are used in multiple parts of the code. It's better to define them in the top of the file, rather than repeating each time:
 
 ```c
-#include <stdio.h>
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include <stdio.h>
 
-#define BLINK_GPIO GPIO_NUM_22 // object-like macro to define gpio to be blinked
+// object-like macro to define the GPIO to be blinked
+#define BLINK_GPIO GPIO_NUM_22
 
-static const char *TAG = "MAIN"; // used for logging
+// used for logging
+static const char *TAG = "MAIN";
 
-void app_main(void)
-{
-    gpio_reset_pin(BLINK_GPIO);
-    gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
+void app_main(void) {
+  gpio_reset_pin(BLINK_GPIO);
+  gpio_set_direction(BLINK_GPIO, GPIO_MODE_OUTPUT);
 
-    uint8_t state = 0;
+  ESP_LOGI(TAG, "Starting LED...");
 
-    ESP_LOGI(TAG, "Starting LED...")
+  while (1) {
+    gpio_set_level(BLINK_GPIO, 1);
+    ESP_LOGI(TAG, "LED State: ON");
+    vTaskDelay(pdMS_TO_TICKS(1000));
 
-    while (1) {
-        gpio_set_level(BLINK_GPIO, state);
-        ESP_LOGI(TAG, "LED State: %s", state ? "ON" : "OFF");
-
-        state = !state;
-
-        vTaskDelay(pdMS_TO_TICKS(1000));
-    }
+    gpio_set_level(BLINK_GPIO, 0);
+    ESP_LOGI(TAG, "LED State: OFF");
+    vTaskDelay(pdMS_TO_TICKS(1000));
+  }
 }
 ```
 
