@@ -96,17 +96,25 @@ Now that the code has been tested, you can commit and push your changes.
 
 ## Improving the code
 
-Currently, we are toggling the LED directly inside the ISR handler. This is not recommended because ISRs have the highest priority, and will block anything else that's running until it finishes.
+The current code has 2 problems.
 
-Currently, this is not a problem. But you will learn about running things in parallel later in the course. In those cases, it's crucial to separate events from function to ensure other tasks aren't blocked.
+### Problem 1: No debounce
 
-Instead, we use a pattern where we:
+You might notice that when you ground the button pin, the LED flickers or quickly reverts to its original state. This happens because of switch bounce (or contact chatter). When a mechanical connection is made, whether using a physical push button or a jumper wire, the metal contacts microscopically bounce against each other rather than making an instantaneous, clean connection. This rapid series of tiny disconnects creates multiple voltage drops that the microcontroller registers as separate button presses within milliseconds.
+
+These extra button presses must be explicitly ignored by checking whether it's too close in time to the previous.
+
+### Problem 2: Heavy work inside ISR handler
+
+Currently, we are toggling the LED directly inside the ISR handler. This is not recommended because ISRs have the highest priority and will block other running tasks. So, ISR handlers should be kept minimal. This is not a problem for our code since there are no other tasks running. But it's a problem if we have.
+
+So, we use a pattern where we:
 
 - Create a queue
 - Create a function which runs in parallel to the main function when started from the main function (we call it a task), which continuously consume the items in the queue
 - Make the ISR handler add an event item to the queue, which the button task will handle one by one (first added is first handled)
 
-Here is the code that uses this approach:
+### Improved code
 
 ```c
 #include <stdio.h>
@@ -116,64 +124,65 @@ Here is the code that uses this approach:
 #include "driver/gpio.h"
 #include "esp_timer.h"
 
-#define LED_PIN       GPIO_NUM_22
-#define BUTTON_PIN    GPIO_NUM_23
-#define DEBOUNCE_TIME_US 200000  // 200ms debounce threshold in microseconds
+#define LED_PIN         GPIO_NUM_22
+#define BUTTON_PIN      GPIO_NUM_23
+#define DEBOUNCE_TIME_US 200000 // 200 milliseconds debounce window
 
-// Queue to send button events from ISR to the task
+static int led_state = 0;
 static QueueHandle_t gpio_evt_queue = NULL;
 
-// ISR with timestamp-based debouncing
+// ISR handler with debounce and queue transmission
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
-    uint32_t gpio_num = (uint32_t) arg;
-    
-    // Get current time in microseconds
     static int64_t last_interrupt_time = 0;
     int64_t current_time = esp_timer_get_time();
 
-    // If interrupts are coming in faster than the debounce window, ignore them
+    // Discard interrupts coming too close together
     if (current_time - last_interrupt_time > DEBOUNCE_TIME_US) {
         last_interrupt_time = current_time;
+        uint32_t gpio_num = (uint32_t) arg;
         xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
     }
 }
 
-// Task to handle button presses from the queue
+// Background task to process button events safely
 static void button_task(void* arg)
 {
     uint32_t io_num;
-    int led_state = 0;
-
     for (;;) {
+        // Wait indefinitely until an event is received from the queue
         if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            // Toggle LED state on valid debounced button press event
             led_state = !led_state;
             gpio_set_level(LED_PIN, led_state);
+            printf("Button pressed on GPIO %lu! LED state: %d\n", io_num, led_state);
         }
     }
 }
 
 void app_main(void)
 {
-    // Configure LED Pin as Output
+    // Configure LED pin
     gpio_reset_pin(LED_PIN);
     gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 
-    // Configure Button Pin as Input with Pull-Up and Interrupt
+    // Configure Button pin with internal pull-up
     gpio_reset_pin(BUTTON_PIN);
     gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
     gpio_pullup_en(BUTTON_PIN);
+
+    // Set interrupt type to falling edge (HIGH to LOW when pressed)
     gpio_set_intr_type(BUTTON_PIN, GPIO_INTR_NEGEDGE);
 
-    // Create Queue for Passing Events
+    // Create a queue to handle GPIO events from the ISR
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
 
-    // Start Button Handler Task
+    // Create the background button handling task
     xTaskCreate(button_task, "button_task", 2048, NULL, 10, NULL);
 
-    // Install ISR Service and Add Handler
+    // Install GPIO ISR service
     gpio_install_isr_service(0);
+
+    // Attach the ISR handler to the button pin and pass the pin number as argument
     gpio_isr_handler_add(BUTTON_PIN, gpio_isr_handler, (void*) BUTTON_PIN);
 }
 ```
