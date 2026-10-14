@@ -17,7 +17,7 @@ Task priority is a number assigned to a task that represents the priority of the
 
 ## Code
 
-We have to first define the task (let's call it `blink_task`), and start the task from `app_main()`:
+We have to first define the task (let's call it `blink_task`), and start the task from `app_main()` using the `xTaskCreate()` function:
 
 ```c
 #include <stdio.h>
