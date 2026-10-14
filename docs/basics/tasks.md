@@ -11,6 +11,8 @@ Now, `app_main()` can do whatever else. The function that runs in parallel is ca
 
 ## Task priority
 
+This time, we are only using a single task, so task priority doesn't matter that much. But it matters when multiple tasks are running in parallel.
+
 Task priority is a number assigned to a task that represents the priority of the task. Higher priority tasks block lower priority tasks. Lower priority tasks can only execute if higher priority tasks stop (temporarily or permanently). If both tasks have the same priority, they run in parallel. We'll learn more about these later in the course.
 
 ## Code
@@ -45,24 +47,24 @@ void app_main(void) {
 
     // Start the task
     xTaskCreate(
-        blink_task,    /* Function pointer to the task */
-        "blink_task",  /* Descriptive name for debugging */
-        2048,          /* Stack size allocated for the task in bytes */
-        NULL,          /* Pointer to input parameters passed to the task (NULL since we aren't giving any input) */
+        blink_task,    /* The task function */
+        "blink_task",  /* Name of the task (used for debugging) */
+        2048,          /* RAM allocated to the task (in bytes) */
+        NULL,          /* Pointer to the parameters passed to the task function (NULL since we aren't giving any parameters) */
         1,             /* Priority of the task (higher number = higher priority) */
-        NULL           /* Task handle to track or control the task later (we aren't using this as of now) */
+        NULL           /* Task handle to track or control the task later (we aren't using this as of now, so NULL) */
     );
 
     // Now you can do anything else here.
-    // `blink_task` will run in parallel.
+    // blink_task() will run in parallel.
 }
 ```
 
 Now, you can build and flash the code to ensure it's working.
 
 !!! tip "Tip"
-    `app_main()` is also a task. It just starts automatically.
+    `app_main()` is also a task. It just starts automatically. The priority of `app_main()` task is 1. The lowest priority value that can be given to a task is 0.
 
 ## Challege (optional)
 
-Connect a new LED to GPIO23 (don't forget the resistor), and create a new task `blink_task_fast()` to blink that second LED faster than the first LED. Start both tasks from `app_main()` (one after the other) so that both LEDs are blinking but in different speeds.
+Connect a new LED to GPIO23 (don't forget the resistor), and create a new task `blink_task_fast()` to blink that second LED faster than the first LED. Start both tasks from `app_main()` (one after the other) with the same priority so that both LEDs are blinking but in different speeds.
