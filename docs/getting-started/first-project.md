@@ -133,13 +133,7 @@ If you are on Windows, flashing might show this error:
 A fatal error occurred: Could not connect to an Espressif device on any of the 1 available serial ports.
 ```
 
-If that happens, the next time you try, press and hold the BOOT button on your board as soon as you see `Connecting...`. After some time, the `Connecting...` will stop and you will see several different outputs. You can stop holding when you see progress bars like this:
-
-```plaintext
-Writing at xxxxxxxxxx [======>              ] xxx.x% xxxx/xxxxx bytes...
-```
-
-Once the progress bar reaches the end, you will see this:
+If that happens, the next time you try, press and hold the BOOT button on your board as soon as you see `Connecting...`. You can release when the `Connecting...` stops and you see other outputs. Once flash is finished, you will see this:
 
 ```
 Flash Done ⚡️
