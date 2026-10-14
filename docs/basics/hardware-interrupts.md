@@ -1,5 +1,8 @@
 # Hardware interrupts
 
+!!! warning "Draft"
+    This chapter is not completed yet. You can check out later chapters if you want.
+
 Hardware interrupts are hardware signals that instantly pause the normal program flow to handle external events such as a button press, without wasting CPU cycles on continuous polling.
 
 Let's update our `led_blink` project such that the LED can be toggled using a button press.
@@ -111,18 +114,29 @@ Here is the code that uses this approach:
 #include "freertos/task.h"
 #include "freertos/queue.h"
 #include "driver/gpio.h"
+#include "esp_timer.h"
 
 #define LED_PIN       GPIO_NUM_22
 #define BUTTON_PIN    GPIO_NUM_23
+#define DEBOUNCE_TIME_US 200000  // 200ms debounce threshold in microseconds
 
 // Queue to send button events from ISR to the task
 static QueueHandle_t gpio_evt_queue = NULL;
 
-// ISR keeps work minimal (add the event to the queue)
+// ISR with timestamp-based debouncing
 static void IRAM_ATTR gpio_isr_handler(void* arg)
 {
     uint32_t gpio_num = (uint32_t) arg;
-    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
+    
+    // Get current time in microseconds
+    static int64_t last_interrupt_time = 0;
+    int64_t current_time = esp_timer_get_time();
+
+    // If interrupts are coming in faster than the debounce window, ignore them
+    if (current_time - last_interrupt_time > DEBOUNCE_TIME_US) {
+        last_interrupt_time = current_time;
+        xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
+    }
 }
 
 // Task to handle button presses from the queue
@@ -132,15 +146,10 @@ static void button_task(void* arg)
     int led_state = 0;
 
     for (;;) {
-        // xQueueRecieve recieves the first item added to the queue.
-        // If there are no items, it waits until one is added.
         if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
-            // Toggle LED state on button press event
+            // Toggle LED state on valid debounced button press event
             led_state = !led_state;
             gpio_set_level(LED_PIN, led_state);
-            
-            // Simple software debounce delay
-            vTaskDelay(pdMS_TO_TICKS(200));
         }
     }
 }
