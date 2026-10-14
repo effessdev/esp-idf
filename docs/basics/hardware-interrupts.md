@@ -98,21 +98,21 @@ Now that the code has been tested, you can commit and push your changes.
 
 The current code has 2 problems.
 
-### Problem 1: No debounce
-
-You might notice that when you ground the button pin, the LED flickers or quickly reverts to its original state. This happens because of switch bounce (or contact chatter). When a mechanical connection is made, whether using a physical push button or a jumper wire, the metal contacts microscopically bounce against each other rather than making an instantaneous, clean connection. This rapid series of tiny disconnects creates multiple voltage drops that the microcontroller registers as separate button presses within milliseconds.
-
-These extra button presses must be explicitly ignored by checking whether it's too close in time to the previous.
-
-### Problem 2: Heavy work inside ISR handler
+### Problem 1: Heavy work inside ISR handler
 
 Currently, we are toggling the LED directly inside the ISR handler. This is not recommended because ISRs have the highest priority and will block other running tasks. So, ISR handlers should be kept minimal. This is not a problem for our code since there are no other tasks running. But it's a problem if we have.
 
 So, we use a pattern where we:
 
-- Create a queue
-- Create a function which runs in parallel to the main function when started from the main function (we call it a task), which continuously consume the items in the queue
-- Make the ISR handler add an event item to the queue, which the button task will handle one by one (first added is first handled)
+- Create an event queue (a queue to store events)
+- Make the ISR handler add an event item to the queue when an interrupt happens instead of taking action directly
+- Create task that continuously consume the items in the queue and take necessary action (like toggling the LED)
+
+### Problem 2: No debounce
+
+You might notice that when you ground the button pin, the LED flickers or quickly reverts to its original state. This happens because of switch bounce (or contact chatter). When a mechanical connection is made, whether using a physical push button or a jumper wire, the metal contacts microscopically bounce against each other rather than making an instantaneous, clean connection. This rapid series of tiny disconnects creates multiple voltage drops that the microcontroller registers as separate button presses within milliseconds.
+
+These extra button presses must be explicitly ignored by checking whether it's too close in time to the previous. This can be done inside the ISR handler.
 
 ### Improved code
 
