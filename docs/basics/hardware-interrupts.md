@@ -39,7 +39,7 @@ static void IRAM_ATTR my_isr_handler(void* arg)
 - We configure the button pin to trigger a signal (interrupt) when it goes from HIGH to LOW.
 - Now, when we touch the other end of the wire to GND, the voltage of the button pin will drop to LOW, triggering the interrupt, and causing the ISR handler to execute.
 
-## The actual code
+## The code
 
 ```c
 #include "driver/gpio.h"
@@ -119,6 +119,72 @@ static void gpio_task(void* arg) {
         if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
             led_state = !led_state;
             gpio_set_level(LED_PIN, led_state);
+        }
+    }
+}
+
+void app_main(void) {
+    // Configure LED pin
+    gpio_reset_pin(LED_PIN);
+    gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
+
+    // Configure Button pin with internal pull-up and falling edge interrupt
+    gpio_reset_pin(BUTTON_PIN);
+    gpio_set_direction(BUTTON_PIN, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(BUTTON_PIN, GPIO_PULLUP_ONLY);
+    gpio_set_intr_type(BUTTON_PIN, GPIO_INTR_NEGEDGE);
+
+    // Create a queue to handle GPIO events from ISR
+    gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+
+    // Start the task to process queue items
+    xTaskCreate(gpio_task, "gpio_task", 2048, NULL, 10, NULL);
+
+    // Install GPIO ISR service and add the handler
+    gpio_install_isr_service(0);
+    gpio_isr_handler_add(BUTTON_PIN, gpio_isr_handler, (void*) BUTTON_PIN);
+}
+```
+
+## Adding debouncing
+
+You might have noticed that the LED flickers when we press the button. This is because the press is almost never *clean*. We will get multiple hardware interrupts for a single button press, extremely close to each other.
+
+We can ignore those *dirty* interrupts by checking whether they are too close to the last interrupt.
+
+```c
+#include "driver/gpio.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
+
+#define BUTTON_PIN GPIO_NUM_23
+#define LED_PIN    GPIO_NUM_2
+#define DEBOUNCE_TIME_MS 50
+
+static QueueHandle_t gpio_evt_queue = NULL;
+
+static void IRAM_ATTR gpio_isr_handler(void* arg) {
+    uint32_t gpio_num = (uint32_t) arg;
+    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
+}
+
+static void gpio_task(void* arg) {
+    uint32_t io_num;
+    int led_state = 0;
+    TickType_t last_tick = 0;
+    const TickType_t debounce_ticks = pdMS_TO_TICKS(DEBOUNCE_TIME_MS);
+    
+    while (1) {
+        if (xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) {
+            TickType_t current_tick = xTaskGetTickCount();
+            
+            // Simple software debounce by checking time elapsed since last valid press
+            if ((current_tick - last_tick) > debounce_ticks) {
+                last_tick = current_tick;
+                led_state = !led_state;
+                gpio_set_level(LED_PIN, led_state);
+            }
         }
     }
 }
