@@ -4,7 +4,7 @@ Click the link below to visit the website.
 
 https://effessdev.github.io/esp-idf
 
-## Course map
+## Course map (internal)
 
 - **Getting started**
     - **Installation:** Install ESP-IDF and ESP-IDF VS Code extension.
