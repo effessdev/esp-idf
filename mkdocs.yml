@@ -74,4 +74,5 @@ nav:
       - Timers: basics/timers.md
       - Mutexes: basics/mutexes.md
       - Hardware Interrupts: basics/hardware-interrupts.md
+      - Debounce: basics/debounce.md
       - Using multiple files: basics/multiple-files.md
