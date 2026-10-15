@@ -1,20 +1,6 @@
 # Tasks
 
-In the previous project, we blinked an LED in GPIO22 in `app_main()` function. But what if we need to keep the LED blinking, while allowing `app_main()` to do other stuff?
-
-We do this by creating a "Task" that blinks the LED indefinitely. Tasks are functions that run in parallel to `app_main()`. They can be started from `app_main()`.
-
-Now, `app_main()` can start the blink LED task, let it blink the LED, and focus on other things.
-
-## Task priority
-
-This time, we are only using a single task, so task priority doesn't matter that much. But it matters when multiple tasks are running in parallel.
-
-Task priority is a number assigned to a task that represents the priority of the task. Higher priority tasks block lower priority tasks. Lower priority tasks can only execute if higher priority tasks stop (temporarily or permanently). If both tasks have the same priority, they run in parallel. We'll learn more about these later in the course.
-
-## Code
-
-We have to first define the task (let's call it `blink_task`), and start the task from `app_main()` using the `xTaskCreate()` function:
+Let's upgrade our blink LED code. Instead of blinking the LED directly inside `app_main()`, let's create a function `blink_led()` and call it from `app_main()`:
 
 ```c
 #include <stdio.h>
@@ -25,15 +11,15 @@ We have to first define the task (let's call it `blink_task`), and start the tas
 
 #define LED_GPIO GPIO_NUM_22
 
-// Define the task
-void blink_task(void *pvParameter) {
+// More on `void *pvParameter` later (hang tight)
+void blink_led(void *pvParameter) {
     while (1) {
         gpio_set_level(LED_GPIO, 1);
-        ESP_LOGI("LED", "LED turned ON!");
+        ESP_LOGI("LED", "LED State: ON");
         vTaskDelay(pdMS_TO_TICKS(1000));
 
         gpio_set_level(LED_GPIO, 0);
-        ESP_LOGI("LED", "LED turned OFF!");
+        ESP_LOGI("LED", "LED State: OFF");
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
@@ -42,26 +28,57 @@ void app_main(void) {
     gpio_reset_pin(LED_GPIO);
     gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
 
-    // Start the task
+    blink_led();
+}
+```
+
+Now, imagine we need to log "LED started blinking" after calling `blink_led()`. But this is not possible because `blink_led()` runs an infinite loop and doesn't return.
+
+Even if we add `ESP_LOGI("LED", "LED started blinking")` after `blink_led()` call, it won't reach there.
+
+## The fix
+
+Instead of calling `blink_led()` directly, what if we let it run parallel to `app_main()`? `app_main()` only need to *start* `blink_led()`. It will run on it's own from then, and `app_main()` can do other stuff.
+
+To do this, we create a **Task** using the `blink_led()` function. Once we create a task, it starts running parallel to `app_main()`.
+
+We can use the `xTaskCreate()` function to create tasks. Update `app_main()` like this:
+
+```c
+void app_main(void) {
+    gpio_reset_pin(LED_GPIO);
+    gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
+
+    // Create the task
     xTaskCreate(
-        blink_task,    /* The task function */
+        blink_led,     /* The task function */
         "blink_task",  /* Name of the task (used for debugging) */
         2048,          /* RAM allocated to the task (in bytes) */
-        NULL,          /* Pointer to the parameters passed to the task function (NULL since we aren't giving any parameters) */
-        1,             /* Priority of the task (higher number = higher priority) */
+        NULL,          /* Pointer to the parameters passed to the task function blink_led (NULL since we aren't giving any parameters) */
+        1,             /* Priority of the task (we'll discuss this later) */
         NULL           /* Task handle to track or control the task later (we aren't using this as of now, so NULL) */
     );
 
     // Now you can do anything else here.
-    // blink_task() will run in parallel.
+    // Let's log something!
+    ESP_LOGI("LED", "LED started blinking")
 }
 ```
 
-Now, you can build and flash the code to ensure it's working.
+Now you can test your code & ensure it's working.
 
-!!! tip "Tip"
-    `app_main()` is also a task. It just starts automatically. The priority of `app_main()` task is 1. The lowest priority value that can be given to a task is 0.
+## A few improvements
 
-## Challege (optional)
+Since `blink_led()` is a task, it's better to rename it to `blink_led_task()` or `blink_task()`. But it's optional.
 
-Connect a new LED to GPIO23 (don't forget to add the resistor), and create a new task `blink_task_fast()` to blink that second LED faster than the first LED. Start both tasks from `app_main()` (one after the other) with the same priority so that both LEDs are blinking but in different speeds.
+## Task priority
+
+In bigger firmware, we might have multiple tasks running in parallel. In those cases, task priority matters a lot.
+
+Here are the key points:
+
+- Task priority is a number assigned to a task that represents the priority of the task.
+- Higher priority tasks block lower priority tasks. Lower priority tasks can only execute if higher priority tasks stop (temporarily or permanently).
+- If both tasks have the same priority, they run in parallel.
+
+We will be creating programs with multiple tasks later in the course!
