@@ -46,22 +46,21 @@ We can use the `xTaskCreate()` function to create tasks. Update `app_main()` lik
 
 ```c
 void app_main(void) {
-    gpio_reset_pin(LED_GPIO);
-    gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
+  gpio_reset_pin(LED_GPIO);
+  gpio_set_direction(LED_GPIO, GPIO_MODE_OUTPUT);
 
-    // Create the task
-    xTaskCreate(
-        blink_led,     /* The task function */
-        "blink_task",  /* Name of the task (used for debugging) */
-        2048,          /* RAM allocated to the task (in bytes) */
-        NULL,          /* Pointer to the parameters passed to the task function blink_led (NULL since we aren't giving any parameters) */
-        1,             /* Priority of the task (we'll discuss this later) */
-        NULL           /* Task handle to track or control the task later (we aren't using this as of now, so NULL) */
-    );
+  // Create the task
+  xTaskCreate(blink_led,    // The task function
+              "blink_task", // Name of the task (used for debugging)
+              2048,         // RAM allocated to the task (in bytes)
+              NULL,         // Pointer to the parameters passed to the task function blink_led (NULL since we aren't giving any parameters)
+              1,            // Priority of the task (we'll discuss this later)
+              NULL          // Task handle to track or control the task later (we aren't using this as of now, so NULL)
+  );
 
-    // Now you can do anything else here.
-    // Let's log something!
-    ESP_LOGI("LED", "LED started blinking")
+  // Now you can do anything else here.
+  // Let's log something!
+  ESP_LOGI("LED", "LED started blinking");
 }
 ```
 
