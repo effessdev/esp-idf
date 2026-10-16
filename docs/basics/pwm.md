@@ -38,11 +38,11 @@ The ESP32 includes a dedicated hardware module called **LEDC** (LED Control). On
 The LEDC peripheral uses two main building blocks:
 
 1. **Timer**:
-   - Sets the **frequency**.
-   - Sets the **duty resolution**.
+    - Sets the **frequency**.
+    - Sets the **duty resolution**.
 2. **Channel**:
-   - Sets the **duty cycle**.
-   - Maps the timer signal to a specific physical GPIO pin.
+    - Sets the **duty cycle**.
+    - Maps the timer signal to a specific physical GPIO pin.
 
 #### Times and channels
 
