@@ -2,6 +2,18 @@
 
 This is a 100% free & ad-free **embedded systems development course** focusing on the ESP32 and the native ESP-IDF framework. Learn at your own pace, with zero distractions!
 
+These the only things you need to complete the course:
+
+- An ESP32 (plus a suitable cable to connect it to your PC)
+- An LED
+- A 220-330 Ω resistor
+- Jumper wires (M2M, M2F, F2F)
+- A breadboard
+
+## OS Compatibility
+
+The course is designed for **Windows and Linux**. macOS users can follow along too, but the [Installation](getting-started/install.md) chapter may require some additional adjustments.
+
 ## What makes this different
 
 **Every single concept is taught through projects**. You learn by doing, not reading, right from the first chapter!
