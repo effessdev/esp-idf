@@ -1,21 +1,10 @@
 # Welcome!
 
-This is an updated 100% free & ad-free **embedded systems development course** focusing on the ESP32 and the native ESP-IDF framework. Learn at your own pace, with zero distractions!
+This is a 100% free & ad-free **embedded systems development course** focusing on the ESP32 and the native ESP-IDF framework. Learn at your own pace, with zero distractions!
 
 ## What makes this different
 
-Unlike older courses, it focuses on the fundamentals, AI-integrated workflows, and what AI still struggles with. Plus, **every single concept is taught through projects**. You learn by doing, not reading, right from the first chapter!
-
-### We skip over
-
-- memorizing syntax and API
-- typing code manually
-
-### We focus on
-
-- learning the fundamentals
-- writing code using AI efficiently
-- reviewing what the AI generates
+**Every single concept is taught through projects**. You learn by doing, not reading, right from the first chapter!
 
 ## Why ESP32
 
