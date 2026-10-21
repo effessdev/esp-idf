@@ -23,14 +23,6 @@ Because the switching happens so quickly, your eyes don't see flickering. Instea
     - Setting the duty resolution to 10 bits allows $2^{10} = 1024$ duty values (from $0$ to $1023$).
     - Setting the duty to 50% of 1023 (approximately 512) makes the brightness 50% (ON from 0 to 511, OFF from 512 to 1023).
 
-### Other applications of PWM
-
-PWM is not just for dimming LEDs. It is widely used in embedded systems for:
-
-- **Motor speed control**: Adjusting the speed of DC motors in fans or electric vehicles.
-- **Servo motors**: Controlling the precise angle of robotic arms.
-- **Buzzer audio**: Generating different sound frequencies and tones.
-
 ### The ESP32 LEDC peripheral
 
 The ESP32 includes a dedicated hardware module called **LEDC** (LED Control). Once you configure it, the LEDC automatically generates the PWM signal in hardware, requiring **0% CPU usage** to keep running.

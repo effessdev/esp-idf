@@ -2,7 +2,7 @@
 
 This is a 100% free & ad-free **embedded systems development course** focusing on the ESP32 and the native ESP-IDF framework. Learn at your own pace, with zero distractions!
 
-These are the _only_ things you need to complete the course:
+## What you need
 
 - An ESP32 (plus a suitable cable to connect it to your PC)
 - An LED
@@ -29,7 +29,3 @@ Since the purpose of this course is to learn embedded systems, using a low level
 ## Is this course AI-generated?
 
 No. [Click here](why-not-ai.md) to learn why this is not AI-generated, this course was made, and what it prioritizes.
-
-## Current state of the course
-
-This course is heavily in development. Feel free to [contibute](https://github.com/effessdev/esp-idf).
