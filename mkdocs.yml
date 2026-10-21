@@ -74,4 +74,4 @@ nav:
       - Timers: basics/timers.md
       - Mutexes: basics/mutexes.md
       - Hardware Interrupts: basics/hardware-interrupts.md
-      - Using multiple files: basics/multiple-files.md
+      - Structuring Your Project: basics/multiple-files.md
