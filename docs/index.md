@@ -2,7 +2,7 @@
 
 This is a 100% free & ad-free **embedded systems development course** focusing on the ESP32 and the native ESP-IDF framework. Learn at your own pace, with zero distractions!
 
-These the only things you need to complete the course:
+These are the _only_ things you need to complete the course:
 
 - An ESP32 (plus a suitable cable to connect it to your PC)
 - An LED

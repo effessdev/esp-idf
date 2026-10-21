@@ -175,15 +175,26 @@ Before compiling the code, there is another step called **preprocessing**. In th
 
 So, this is functionally similar to putting the declarations in `main.c` itself. But by separating declarations into a separate file, we can keep `main.c` cleaner.
 
-!!! warning "Note"
-    Add `#pragma once` on the very top of the header files to make sure they don't get included multiple times.
+### #pragma once
+
+To ensure that no header get included multiple times (even if you do), add `#pragma once` on the very top of **all** header files. This is something you should remember every time you create a header file.
+
+The updated header file would look like this:
+
+```c
+#pragma once
+
+// Initialize the LED GPIO. Must be called once before led_toggle().
+void led_init(void);
+
+// Toggle the LED state (on -> off, off -> on).
+void led_toggle(void);
+```
 
 ### FAQs
 
-Frequently asked questions:
-
-??? question "Can we use `#include functions.c` in `main.c`?"
-    Yes, and it works in this case. But it's considered as a bad practice. If we do that, the final file would contain the contents of both `main.c` and `functions.c`, which will be large. Even if we only changed `functions.c`, the entire file will need to be recompiled, which is slow.
+??? question "Can we do `#include functions.c` in `main.c`?"
+    Yes, and it works in this case. But it's considered as a bad practice. If we do that, the final file would contain the contents of both `main.c` and `functions.c`. Even if we only changed `functions.c`, the entire file will need to be recompiled, which is slow when you have many large files.
 
 ## For even bigger projects
 

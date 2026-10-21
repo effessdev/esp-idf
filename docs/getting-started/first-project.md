@@ -36,12 +36,14 @@ Install the extensions from the "Extensions" tab. That's it.
 
 ### Option 2: Clangd (if you are using a VS Code fork)
 
+Microsoft C/C++ extension isn't available in VS Code forks (like Cursor). So we use Clangd as an alternative.
+
 Install Clangd from the "Extensions" tab. Then, run `ESP-IDF: Configure project for ESP-Clang` from the VS Code command palette.
 
 ### Whatever you choose...
 
 !!! warning "Note"
-    You have to make sure both of them aren't activated at the same time, as they can interfere with each other.
+    Make sure both of them aren't activated at the same time, as they can interfere with each other.
 
 ## Configure your project
 
