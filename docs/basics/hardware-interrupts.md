@@ -1,8 +1,5 @@
 # Hardware interrupts
 
-!!! warning "Draft"
-    This chapter is not completed yet.
-
 In this chapter, we are going to write a program which allows us to toggle an LED using a button (we don't need a real button, we'll use a workaround!).
 
 The connections are the same as before (LED & resistor). But we have to connect a jumper wire to GPIO23. Leave the other end of the jumper wire not connected to anything. Touching the other end of this jumper wire to the `GND` pin in the ESP32 will toggle the LED (equivalent to what happens internally when we press a real button).
@@ -47,7 +44,7 @@ static void IRAM_ATTR my_isr_handler(void* arg)
 #include "freertos/task.h"
 
 #define BUTTON_PIN GPIO_NUM_23
-#define LED_PIN    GPIO_NUM_2
+#define LED_PIN    GPIO_NUM_22
 
 static int led_state = 0;
 
@@ -102,7 +99,7 @@ Here is the code that uses this approach:
 #include "freertos/queue.h"
 
 #define BUTTON_PIN GPIO_NUM_23
-#define LED_PIN    GPIO_NUM_2
+#define LED_PIN    GPIO_NUM_22
 
 static QueueHandle_t gpio_evt_queue = NULL;
 
@@ -159,7 +156,7 @@ We can ignore those *dirty* interrupts by checking whether they are too close to
 #include "freertos/queue.h"
 
 #define BUTTON_PIN GPIO_NUM_23
-#define LED_PIN    GPIO_NUM_2
+#define LED_PIN    GPIO_NUM_22
 #define DEBOUNCE_TIME_MS 50
 
 static QueueHandle_t gpio_evt_queue = NULL;
