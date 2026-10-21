@@ -1,4 +1,4 @@
-# Using multiple files
+# Structuring your project
 
 This is our current project structure (I skipped some files to make it smaller):
 
@@ -187,7 +187,7 @@ Frequently asked questions:
 
 ## For even bigger projects
 
-!!! warning "This section was made in a hurry 🏃
+!!! warning "The following section was made in a hurry 🏃"
     Because I didn't get enough time (sorry 😢), I wasn't able to complete the following section up to the standards of the rest of the course. But including it here anyway since I wasn't comfortable with completely omitting it. If you want to learn about ESP-IDF components in detail, please check out [this page from the official documentation](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/api-guides/build-system.html), but **only after reading the following section** (the official docs are not as good as my course lol but it's wayy more detailed).
 
 As our project grows, we can organize related files into separate _components_ instead of keeping everything in the `main` folder.
@@ -213,11 +213,9 @@ Each component has its own `CMakeLists.txt`, which defines its source files and 
 
 Note that we put the header file in the `include` directory instead of directly along with `led.c` to make the component even cleaner.
 
-**`components/led/CMakeLists.txt`:**
+### components/led/CMakeLists.txt
 
-Since `led` is a separate component, we should specify which other components it depends on in `components/led/CMakeLists.txt`. If our `led` component uses `#include "driver/gpio.h"`, you should add the `esp_driver_gpio` component using `PRIV_REQUIRES` (or `REQUIRES` in some cases). We don't have to do this in `main/CMakeLists.txt`.
-
-So, before including any headers, search on Google which component we have to add in `PRIV_REQUIRES` to include that specific header in your specific ESP-IDF version (in this course, version 6).
+Since `led` is a separate component, we should specify which other components it depends on in `components/led/CMakeLists.txt`. If our `led` component uses `#include "driver/gpio.h"`, you should add the `esp_driver_gpio` component using `PRIV_REQUIRES` (or `REQUIRES` in some cases). We don't have to do this for `main/main.c` (only for other files).
 
 ```cmake
 idf_component_register(
@@ -225,6 +223,8 @@ idf_component_register(
     PRIV_REQUIRES esp_driver_gpio
 )
 ```
+
+So, before including any headers, search on Google which component we have to add in `PRIV_REQUIRES` to include that specific header in your specific ESP-IDF version (in this course, version 6).
 
 We put the header file in the `include` folder, right? So, we have to add `INCLUDE_DIRS "include"` too. This makes it equivalent to putting the header directly in the component (next to `led.c`). Update it like this:
 
@@ -236,7 +236,7 @@ idf_component_register(
 )
 ```
 
-**`main/CMakeLists.txt`:**
+### main/CMakeLists.txt
 
 Fun fact: our `main` is also a component! Since it depends on the `led` component, add `PRIV_REQUIRES led`:
 
