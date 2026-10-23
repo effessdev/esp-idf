@@ -60,6 +60,13 @@ extra_javascript:
 
 extra:
   generator: false
+  social:
+    - icon: fontawesome/solid/globe
+      link: https://effessdev.github.io
+      name: Author's Personal Website
+    - icon: fontawesome/brands/github
+      link: https://github.com/effessdev
+      name: Author's GitHub Profile
 
 nav:
   - Welcome: index.md
