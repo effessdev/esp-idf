@@ -18,7 +18,11 @@ The tab will refresh, and you will see a form to fill in your project details. F
 
 - **Project name:** Your project name.
 - **Project directory:** Your project directory.
-- **ESP-IDF target:** esp32.
+- **ESP-IDF target:** Check the model printed on the shiny metal square on your board and select the matching option. For example:
+    - If it says ESP32, select `esp32`.
+    - If it says ESP32-S3, select `esp32s3`.
+    - If it says ESP32-C6, select `esp32c6`.
+    - And so on.
 - **ESP-IDF board:** Custom board.
 - **Serial port:** Detect.
 - **OpenOCD configuration files:** Keep the default value.
