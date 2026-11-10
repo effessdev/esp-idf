@@ -1,31 +1,53 @@
-# Welcome!
+# Welcome! 👋
 
-This is a 100% free & ad-free **embedded systems development course** focusing on the ESP32 and the native ESP-IDF framework. Learn at your own pace, with zero distractions!
+Welcome to a **free, ad-free embedded systems development course** built around the ESP32 and Espressif's native ESP-IDF framework.
 
-## What you need
+Whether you're completely new to embedded development or already have some programming experience, this course will guide you through the fundamentals one project at a time.
 
-- An ESP32 (plus a suitable cable to connect it to your PC)
+No subscriptions. No advertisements. No unnecessary distractions. Just you, your ESP32, and a bunch of things to build.
+
+## What you'll need
+
+Before getting started, grab these components:
+
+- An ESP32 development board (and a suitable USB cable)
 - An LED
-- A 220-330 Ω resistor
-- Jumper wires (M2M, M2F, F2F)
+- A 220–330 Ω resistor
+- Jumper wires (M2M, M2F, and F2F)
 - A breadboard
 
-## OS Compatibility
+That's all you need to get started!
 
-The course is designed for **Windows and Linux**. macOS users can follow along too, but the [Installation](getting-started/install.md) chapter may require some additional adjustments.
+## Operating system compatibility
 
-## What makes this different
+The course is primarily designed for **Windows and Linux**.
 
-**Every single concept is taught through projects**. You learn by doing, not reading, right from the first chapter!
+macOS users are welcome too! However, some steps in the [Installation](getting-started/install.md) chapter may require minor adjustments.
 
-## Why ESP32
+## Learn by building
 
-ESP32 microcontrollers are cheap, and comes with WiFi and Bluetooth bulit-in. Extremely useful for IoT products.
+**Every concept is introduced through practical projects.**
 
-## Why ESP-IDF Over Arduino Core
+Instead of spending hours reading theory before writing your first program, you'll start building things from the very beginning. Each project introduces new concepts gradually, helping you understand not just *what* you're doing, but *why* you're doing it.
 
-Since the purpose of this course is to learn embedded systems, using a low level framework like ESP-IDF is benefitial as it exposes many details that Arduino Core abstracts away. ESP-IDF is designed for commercial-grade products rather than simple hobby prototypes.
+## Why the ESP32?
+
+The ESP32 offers an impressive amount of functionality at a relatively low cost.
+
+Depending on the model, you get built-in Wi-Fi and Bluetooth, making it an excellent platform for learning embedded development and building Internet of Things (IoT) projects.
+
+It's affordable, versatile, and capable of much more than blinking LEDs!
+
+## Why ESP-IDF instead of Arduino?
+
+Arduino is a great way to get started with microcontrollers, but this course has a different goal: **to help you understand embedded systems, not just program a microcontroller.**
+
+ESP-IDF gives you direct access to the features and mechanisms that make embedded systems work. You'll encounter concepts that Arduino's higher-level abstractions often hide, giving you a better understanding of what's happening beneath the surface.
+
+It's also the framework Espressif provides for developing production-oriented ESP32 applications.
 
 ## Is this course AI-generated?
 
-No. [Click here](why-not-ai.md) to learn why this is not AI-generated, this course was made, and what it prioritizes.
+No! This course is written with a deliberate focus on clarity, practical learning, and a carefully structured progression.
+
+I do use AI as a supporting tool, but the course itself is not blindly generated. [Read more about my approach](why-not-ai.md).
