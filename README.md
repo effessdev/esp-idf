@@ -12,9 +12,9 @@ https://effessdev.github.io/esp-idf
 - **Basics**
     - **Prerequisites:** Hardware, Breadboard, Git, GitHub.
     - **Blinking an LED:** `vTaskDelay()`, `gpio_reset_pin()`, `gpio_set_direction()`, `gpio_set_level()`, object-like macros for defining `BLINK_GPIO`, keeping `TAG` on top of the file.
-    - **Tasks:**
-    - **Pulse Width Modulation:**
-    - **Timers:**
-    - **Mutexes:**
-    - **Hardware Interrupts:**
-    - **Using multiple files:**
+    - **Tasks:** Creating tasks using `xTaskCreate`, task priority.
+    - **Pulse Width Modulation:** Duty cycle, frequency, duty resolution, duty, timer, channel.
+    - **Timers:** timers, callback functions, one-shot and periodic timer, `esp_timer` API, creating and using timers.
+    - **Mutexes:** Basics.
+    - **Hardware Interrupts:** ISR handler, `IRAM_ATTR`, setting up hardware interrupts, debouncing.
+    - **Using multiple files:** Using multiple source files, header files, `#include`, `#pragma once`, components.
